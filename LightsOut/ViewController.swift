@@ -20,6 +20,8 @@ class ViewController: UIViewController {
     Device(name: "desktop", address: "http://192.168.31.126"),
     Device(name: "tumba", address: "http://192.168.31.248")
   ]
+    
+  var server: BonjourServer!
 
   var selectedDevice: Device?
 
@@ -40,6 +42,28 @@ class ViewController: UIViewController {
     tableView.reloadData()
 
     colorPicker.delegate = self
+
+    server = BonjourServer()
+    server.delegate = self
+
+  }
+}
+
+extension ViewController: BonjourServerDelegate {
+  func didChangeServices() {
+      print("didChangeServices", server.devices)
+  }
+
+  func connected() {
+      
+  }
+  
+  func disconnected() {
+      
+  }
+  
+  func handleBody(_ body: NSString?) {
+      
   }
 }
 
