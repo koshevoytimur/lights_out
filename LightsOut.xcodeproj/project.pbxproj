@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0ABB573C269F9EDC00C957DE /* BonjourServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ABB573B269F9EDC00C957DE /* BonjourServer.swift */; };
+		0ABB5740269FA0A300C957DE /* GCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ABB573F269FA0A300C957DE /* GCDAsyncSocket.m */; };
 		D9EF30A12683BF94009761A9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9EF30A02683BF94009761A9 /* AppDelegate.swift */; };
 		D9EF30A32683BF94009761A9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9EF30A22683BF94009761A9 /* SceneDelegate.swift */; };
 		D9EF30A52683BF94009761A9 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9EF30A42683BF94009761A9 /* ViewController.swift */; };
@@ -16,6 +18,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0ABB573B269F9EDC00C957DE /* BonjourServer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BonjourServer.swift; sourceTree = "<group>"; };
+		0ABB573D269FA07000C957DE /* GCDAsyncSocket.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GCDAsyncSocket.h; sourceTree = "<group>"; };
+		0ABB573E269FA0A200C957DE /* LightsOut-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "LightsOut-Bridging-Header.h"; sourceTree = "<group>"; };
+		0ABB573F269FA0A300C957DE /* GCDAsyncSocket.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GCDAsyncSocket.m; sourceTree = "<group>"; };
 		D9EF309D2683BF94009761A9 /* LightsOut.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LightsOut.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D9EF30A02683BF94009761A9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D9EF30A22683BF94009761A9 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -63,6 +69,10 @@
 				D9EF30A92683BF95009761A9 /* Assets.xcassets */,
 				D9EF30AB2683BF95009761A9 /* LaunchScreen.storyboard */,
 				D9EF30AE2683BF95009761A9 /* Info.plist */,
+				0ABB573B269F9EDC00C957DE /* BonjourServer.swift */,
+				0ABB573D269FA07000C957DE /* GCDAsyncSocket.h */,
+				0ABB573F269FA0A300C957DE /* GCDAsyncSocket.m */,
+				0ABB573E269FA0A200C957DE /* LightsOut-Bridging-Header.h */,
 			);
 			path = LightsOut;
 			sourceTree = "<group>";
@@ -98,6 +108,7 @@
 				TargetAttributes = {
 					D9EF309C2683BF94009761A9 = {
 						CreatedOnToolsVersion = 12.5.1;
+						LastSwiftMigration = 1250;
 					};
 				};
 			};
@@ -136,9 +147,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0ABB5740269FA0A300C957DE /* GCDAsyncSocket.m in Sources */,
 				D9EF30A52683BF94009761A9 /* ViewController.swift in Sources */,
 				D9EF30A12683BF94009761A9 /* AppDelegate.swift in Sources */,
 				D9EF30A32683BF94009761A9 /* SceneDelegate.swift in Sources */,
+				0ABB573C269F9EDC00C957DE /* BonjourServer.swift in Sources */,
 				D9EF30B52683CD56009761A9 /* DetailsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -278,16 +291,19 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = H9FL6Z93F8;
+				DEVELOPMENT_TEAM = 9PZYMNMW5P;
 				INFOPLIST_FILE = LightsOut/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.3;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.timurkoshevoy.LightsOut;
+				PRODUCT_BUNDLE_IDENTIFIER = com.flaminisx.LightsOut;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "LightsOut/LightsOut-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -298,16 +314,18 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = H9FL6Z93F8;
+				DEVELOPMENT_TEAM = 9PZYMNMW5P;
 				INFOPLIST_FILE = LightsOut/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.3;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.timurkoshevoy.LightsOut;
+				PRODUCT_BUNDLE_IDENTIFIER = com.flaminisx.LightsOut;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "LightsOut/LightsOut-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
