@@ -5,7 +5,7 @@
 //  Created by Essence K on 23.06.2021.
 //
 
-struct Device {
+struct Device: Hashable {
   let name: String
   let address: String
 }
@@ -123,6 +123,8 @@ extension ViewController: UIColorPickerViewControllerDelegate {
     let color = hexStringFromColor(color: viewController.selectedColor)
     guard let device = selectedDevice else { return }
     sendRequest(address: device.address, color: color)
+    let index = Int(devices.firstIndex{ $0 == device }!)
+    tableView.deselectRow(at: IndexPath(row: index, section: 0), animated: true)
   }
 
   func hexStringFromColor(color: UIColor) -> String {
