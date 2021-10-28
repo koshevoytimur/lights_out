@@ -46,22 +46,6 @@ class ViewController: UIViewController {
 }
 
 extension ViewController: BonjourServerDelegate {
-  func didChangeServices() {
-
-  }
-
-  func connected() {
-
-  }
-  
-  func disconnected() {
-
-  }
-  
-  func handleBody(_ body: NSString?) {
-
-  }
-
   func didResolveAddress(device: Device) {
     devices.append(device)
     tableView.reloadData()
@@ -84,6 +68,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
   }
 
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    tableView.deselectRow(at: indexPath, animated: true)
     selectedDevice = devices[indexPath.row]
     present(colorPicker, animated: true)
   }
@@ -99,6 +84,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     request.setValue("application/x-www-form-urlencoded",
                      forHTTPHeaderField: "Content-Type")
     let session = URLSession.shared
+
     session.dataTask(with: request) { data, response, error in
       if let data = data {
         let str = String(data: data, encoding: .utf8)
@@ -111,11 +97,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
   }
 }
 
-
 extension ViewController: UIColorPickerViewControllerDelegate {
-  func colorPickerViewControllerDidFinish(_ viewController: UIColorPickerViewController) {
-    view.backgroundColor = viewController.selectedColor
-  }
 
   //  Called on every color selection done in the picker.
   func colorPickerViewControllerDidSelectColor(_ viewController: UIColorPickerViewController) {
@@ -136,7 +118,6 @@ extension ViewController: UIColorPickerViewControllerDelegate {
     return hexString
   }
 }
-
 
 class TableViewCell: UITableViewCell {
   static let id = "deviceCell"
