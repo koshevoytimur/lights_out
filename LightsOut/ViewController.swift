@@ -5,7 +5,7 @@
 //  Created by Essence K on 23.06.2021.
 //
 
-struct Device {
+struct Device: Hashable {
   let name: String
   let address: String
 }
@@ -98,7 +98,6 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
 }
 
 extension ViewController: UIColorPickerViewControllerDelegate {
-
   //  Called on every color selection done in the picker.
   func colorPickerViewControllerDidSelectColor(_ viewController: UIColorPickerViewController) {
     view.backgroundColor = viewController.selectedColor

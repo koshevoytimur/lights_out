@@ -126,7 +126,6 @@ class BonjourServer: NSObject, NetServiceBrowserDelegate, NetServiceDelegate, GC
     var address: String = ""
     if let addresses = sender.addresses, !addresses.isEmpty {
       address = String(decoding: addresses[0], as: UTF8.self)
-    }
     print("did resolve address \(sender.name)", sender.addresses?.count ?? 0, address)
 
     var hostname = [CChar] (repeating: 0, count: Int (NI_MAXHOST))

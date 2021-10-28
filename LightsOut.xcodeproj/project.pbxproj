@@ -18,7 +18,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		0ABB573B269F9EDC00C957DE /* BonjourServer.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; path = BonjourServer.swift; sourceTree = "<group>"; };
+		0ABB573B269F9EDC00C957DE /* BonjourServer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BonjourServer.swift; sourceTree = "<group>"; };
 		0ABB573D269FA07000C957DE /* GCDAsyncSocket.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GCDAsyncSocket.h; sourceTree = "<group>"; };
 		0ABB573E269FA0A200C957DE /* LightsOut-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "LightsOut-Bridging-Header.h"; sourceTree = "<group>"; };
 		0ABB573F269FA0A300C957DE /* GCDAsyncSocket.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GCDAsyncSocket.m; sourceTree = "<group>"; };
