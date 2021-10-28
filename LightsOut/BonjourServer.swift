@@ -21,11 +21,11 @@ protocol BonjourServerDelegate: AnyObject {
 }
 
 extension BonjourServerDelegate {
-    func connected() {}
-    func disconnected() {}
-    func handleBody(_ body: NSString?) {}
-    func didChangeServices() {}
-    func didResolveAddress(device: Device) {}
+  func connected() {}
+  func disconnected() {}
+  func handleBody(_ body: NSString?) {}
+  func didChangeServices() {}
+  func didResolveAddress(device: Device) {}
 }
 
 class BonjourServer: NSObject, NetServiceBrowserDelegate, NetServiceDelegate, GCDAsyncSocketDelegate {
@@ -126,8 +126,8 @@ class BonjourServer: NSObject, NetServiceBrowserDelegate, NetServiceDelegate, GC
     var address: String = ""
     if let addresses = sender.addresses, !addresses.isEmpty {
       address = String(decoding: addresses[0], as: UTF8.self)
-    print("did resolve address \(sender.name)", sender.addresses?.count ?? 0, address)
-
+      print("did resolve address \(sender.name)", sender.addresses?.count ?? 0, address)
+    }
     var hostname = [CChar] (repeating: 0, count: Int (NI_MAXHOST))
     guard let data = sender.addresses?.first else {return}
     do {
