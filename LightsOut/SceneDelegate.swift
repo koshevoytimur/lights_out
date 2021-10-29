@@ -11,11 +11,18 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
   var window: UIWindow?
 
+  private lazy var mainNavigationController = UINavigationController(rootViewController: MainViewController())
+  private lazy var homeNavigationController = UINavigationController(rootViewController: HomeViewController())
 
   func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
     guard let windowScene = (scene as? UIWindowScene) else { return }
     let window = UIWindow(windowScene: windowScene)
-    window.rootViewController = ViewController()
+
+    let splitContoller = UISplitViewController()
+    splitContoller.delegate = self
+    splitContoller.viewControllers = [mainNavigationController]
+
+    window.rootViewController = splitContoller
     window.makeKeyAndVisible()
     self.window = window
   }
@@ -47,7 +54,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     // Use this method to save data, release shared resources, and store enough scene-specific state information
     // to restore the scene back to its current state.
   }
-
-
 }
 
+extension SceneDelegate: UISplitViewControllerDelegate {
+  func primaryViewController(forCollapsing splitViewController: UISplitViewController) -> UIViewController? {
+    mainNavigationController
+  }
+
+  func splitViewController(_ splitViewController: UISplitViewController, collapseSecondary secondaryViewController: UIViewController, onto primaryViewController: UIViewController) -> Bool {
+    true
+  }
+}

@@ -135,7 +135,7 @@ class BonjourServer: NSObject, NetServiceBrowserDelegate, NetServiceDelegate, GC
         guard getnameinfo (pointer, socklen_t (data.count),&hostname, socklen_t (hostname.count), nil, 0, NI_NUMERICHOST) == 0
         else { throw NSError (domain: "error_domain", code: 0, userInfo: .none) }
         let address = String (cString: hostname)
-        let device = Device(name: sender.name, address: address)
+        let device = Device(name: sender.name, address: address, leds: [Device.Led]())
         delegate?.didResolveAddress(device: device)
       }
     } catch {
