@@ -15,8 +15,16 @@ class StoreService {
   }
 
   func fetch<T: Decodable>(_ type: T.Type, key: String) -> T? {
-    guard let data =  defaults.object(forKey: key) as? Data else { return nil }
+    guard let data = defaults.object(forKey: key) as? Data else { return nil }
     return try? PropertyListDecoder().decode(T.self, from: data)
+  }
+
+  func saveStr(_ obj: String, key: String) {
+    defaults.set(obj, forKey: key)
+  }
+
+  func fetchStr(key: String) -> String? {
+    defaults.string(forKey: key)
   }
 
   func delete(key: String) {

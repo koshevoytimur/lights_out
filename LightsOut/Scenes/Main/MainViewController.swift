@@ -31,7 +31,6 @@ class MainViewController: UIViewController {
   private func setupView() {
     title = "Main"
     navigationItem.largeTitleDisplayMode = .automatic
-    view.backgroundColor = .white
 
     tableView.delegate = self
     tableView.dataSource = self

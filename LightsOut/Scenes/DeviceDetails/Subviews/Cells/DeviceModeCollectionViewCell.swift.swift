@@ -10,7 +10,6 @@ import UIKit
 class DeviceModeCollectionViewCell: UICollectionViewCell, ReusableCell {
   struct Props {
     let title: String
-    let color: UIColor
   }
 
   private let padding: CGFloat = 8
@@ -21,9 +20,6 @@ class DeviceModeCollectionViewCell: UICollectionViewCell, ReusableCell {
 
   private lazy var titleLabel: UILabel = {
     let label = UILabel()
-    label.layer.cornerRadius = 4
-    label.clipsToBounds = true
-    label.textColor = .black
     label.textAlignment = .center
     label.font = .boldSystemFont(ofSize: 20)
     label.adjustsFontSizeToFitWidth = true
@@ -55,12 +51,14 @@ class DeviceModeCollectionViewCell: UICollectionViewCell, ReusableCell {
   }
 
   private func setupView() {
-    contentView.backgroundColor = .lightText
-    contentView.layer.cornerRadius = 8
+    rounded(8)
+    backgroundColor = .clear
+    contentView.backgroundColor = .lightGray.withAlphaComponent(0.3)
+    contentView.rounded(8)
     setupContainerView()
     mainStack.addArrangedSubview(titleLabel)
     mainStack.addArrangedSubview(buttonsStack)
-    buttonsStack.addArrangedSubview(UIView())
+    buttonsStack.addArrangedSubview(makeSpacer())
     buttonsStack.addArrangedSubview(button)
     button.widthAnchor.constraint(
       equalToConstant: UIScreen.main.bounds.width / 4
@@ -73,8 +71,18 @@ class DeviceModeCollectionViewCell: UICollectionViewCell, ReusableCell {
     contentView.addSubview(mainStack)
   }
 
+  private func makeSpacer(width: CGFloat? = nil) -> UIView {
+    let view = UIView()
+    view.backgroundColor = .clear
+    guard let width = width else {
+      return view
+    }
+    view.translatesAutoresizingMaskIntoConstraints = false
+    view.widthAnchor.constraint(equalToConstant: width).isActive = true
+    return view
+  }
+
   public func render(props: Props) {
     titleLabel.text = props.title
-    mainStack.backgroundColor = props.color
   }
 }
