@@ -3,17 +3,29 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		0ABB573C269F9EDC00C957DE /* BonjourServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ABB573B269F9EDC00C957DE /* BonjourServer.swift */; };
 		0ABB5740269FA0A300C957DE /* GCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ABB573F269FA0A300C957DE /* GCDAsyncSocket.m */; };
-		D91B39BD272AAD43007ED8B0 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D91B39BC272AAD43007ED8B0 /* NetworkService.swift */; };
+		D915664B2739846000E88EC4 /* DeviceResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = D915664A2739846000E88EC4 /* DeviceResponse.swift */; };
 		D93D1090272AF72D00453B3D /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D93D108F272AF72D00453B3D /* HomeViewController.swift */; };
-		D97EECDD272B581C008DA06A /* StoreService.swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = D97EECDC272B581C008DA06A /* StoreService.swift.swift */; };
+		D97D508627709727003D677A /* Moya in Frameworks */ = {isa = PBXBuildFile; productRef = D97D508527709727003D677A /* Moya */; };
+		D97D50892770A22D003D677A /* ColorRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D97D50882770A22D003D677A /* ColorRequest.swift */; };
+		D97D508B2770A2E9003D677A /* RainbowRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D97D508A2770A2E9003D677A /* RainbowRequest.swift */; };
+		D97EECDD272B581C008DA06A /* StoreService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D97EECDC272B581C008DA06A /* StoreService.swift */; };
 		D97EECE0272B6B5B008DA06A /* Device.swift in Sources */ = {isa = PBXBuildFile; fileRef = D97EECDF272B6B5B008DA06A /* Device.swift */; };
 		D97EECE3272B6DE0008DA06A /* DeviceCell.swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = D97EECE2272B6DE0008DA06A /* DeviceCell.swift.swift */; };
+		D998F90F2730A054000EA384 /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = D998F90E2730A054000EA384 /* Button.swift */; };
+		D998F91227315792000EA384 /* DeviceCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D998F91127315792000EA384 /* DeviceCollectionViewCell.swift */; };
+		D998F915273158A1000EA384 /* Reusable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D998F914273158A1000EA384 /* Reusable.swift */; };
+		D998F91827341701000EA384 /* UIView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D998F91727341701000EA384 /* UIView+Extensions.swift */; };
+		D998F91A2734171E000EA384 /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D998F9192734171E000EA384 /* UIColor+Extensions.swift */; };
+		D9C7C53D2770AA4B0064D9BD /* FireRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9C7C53C2770AA4B0064D9BD /* FireRequest.swift */; };
+		D9C7C53F2770B0440064D9BD /* DeviceNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9C7C53E2770B0440064D9BD /* DeviceNetwork.swift */; };
+		D9C7C5412770BABF0064D9BD /* DeviceModeCollectionViewCell.swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9C7C5402770BABF0064D9BD /* DeviceModeCollectionViewCell.swift.swift */; };
+		D9C7C5432771582C0064D9BD /* BitmapRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9C7C5422771582C0064D9BD /* BitmapRequest.swift */; };
 		D9EF30A12683BF94009761A9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9EF30A02683BF94009761A9 /* AppDelegate.swift */; };
 		D9EF30A32683BF94009761A9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9EF30A22683BF94009761A9 /* SceneDelegate.swift */; };
 		D9EF30A52683BF94009761A9 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9EF30A42683BF94009761A9 /* MainViewController.swift */; };
@@ -27,11 +39,22 @@
 		0ABB573D269FA07000C957DE /* GCDAsyncSocket.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GCDAsyncSocket.h; sourceTree = "<group>"; };
 		0ABB573E269FA0A200C957DE /* LightsOut-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "LightsOut-Bridging-Header.h"; sourceTree = "<group>"; };
 		0ABB573F269FA0A300C957DE /* GCDAsyncSocket.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GCDAsyncSocket.m; sourceTree = "<group>"; };
-		D91B39BC272AAD43007ED8B0 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
+		D915664A2739846000E88EC4 /* DeviceResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceResponse.swift; sourceTree = "<group>"; };
 		D93D108F272AF72D00453B3D /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
-		D97EECDC272B581C008DA06A /* StoreService.swift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreService.swift.swift; sourceTree = "<group>"; };
+		D97D50882770A22D003D677A /* ColorRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorRequest.swift; sourceTree = "<group>"; };
+		D97D508A2770A2E9003D677A /* RainbowRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RainbowRequest.swift; sourceTree = "<group>"; };
+		D97EECDC272B581C008DA06A /* StoreService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreService.swift; sourceTree = "<group>"; };
 		D97EECDF272B6B5B008DA06A /* Device.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Device.swift; sourceTree = "<group>"; };
 		D97EECE2272B6DE0008DA06A /* DeviceCell.swift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceCell.swift.swift; sourceTree = "<group>"; };
+		D998F90E2730A054000EA384 /* Button.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
+		D998F91127315792000EA384 /* DeviceCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceCollectionViewCell.swift; sourceTree = "<group>"; };
+		D998F914273158A1000EA384 /* Reusable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reusable.swift; sourceTree = "<group>"; };
+		D998F91727341701000EA384 /* UIView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extensions.swift"; sourceTree = "<group>"; };
+		D998F9192734171E000EA384 /* UIColor+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
+		D9C7C53C2770AA4B0064D9BD /* FireRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FireRequest.swift; sourceTree = "<group>"; };
+		D9C7C53E2770B0440064D9BD /* DeviceNetwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceNetwork.swift; sourceTree = "<group>"; };
+		D9C7C5402770BABF0064D9BD /* DeviceModeCollectionViewCell.swift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceModeCollectionViewCell.swift.swift; sourceTree = "<group>"; };
+		D9C7C5422771582C0064D9BD /* BitmapRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BitmapRequest.swift; sourceTree = "<group>"; };
 		D9EF309D2683BF94009761A9 /* LightsOut.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LightsOut.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D9EF30A02683BF94009761A9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D9EF30A22683BF94009761A9 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -47,17 +70,25 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D97D508627709727003D677A /* Moya in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		D91566492739845500E88EC4 /* Response */ = {
+			isa = PBXGroup;
+			children = (
+				D915664A2739846000E88EC4 /* DeviceResponse.swift */,
+			);
+			path = Response;
+			sourceTree = "<group>";
+		};
 		D91B39BA272AAD1D007ED8B0 /* Services */ = {
 			isa = PBXGroup;
 			children = (
-				D91B39BC272AAD43007ED8B0 /* NetworkService.swift */,
-				D97EECDC272B581C008DA06A /* StoreService.swift.swift */,
+				D97EECDC272B581C008DA06A /* StoreService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -93,14 +124,29 @@
 			isa = PBXGroup;
 			children = (
 				D9EF30B42683CD56009761A9 /* DeviceDetailsViewController.swift */,
+				D998F90C2730A00F000EA384 /* Subviews */,
 			);
 			path = DeviceDetails;
+			sourceTree = "<group>";
+		};
+		D97D50872770A21C003D677A /* Request */ = {
+			isa = PBXGroup;
+			children = (
+				D97D50882770A22D003D677A /* ColorRequest.swift */,
+				D97D508A2770A2E9003D677A /* RainbowRequest.swift */,
+				D9C7C53C2770AA4B0064D9BD /* FireRequest.swift */,
+				D9C7C5422771582C0064D9BD /* BitmapRequest.swift */,
+			);
+			path = Request;
 			sourceTree = "<group>";
 		};
 		D97EECDE272B6B48008DA06A /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				D97D50872770A21C003D677A /* Request */,
+				D91566492739845500E88EC4 /* Response */,
 				D97EECDF272B6B5B008DA06A /* Device.swift */,
+				D9C7C53E2770B0440064D9BD /* DeviceNetwork.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -111,6 +157,50 @@
 				D97EECE2272B6DE0008DA06A /* DeviceCell.swift.swift */,
 			);
 			path = Subviews;
+			sourceTree = "<group>";
+		};
+		D998F90C2730A00F000EA384 /* Subviews */ = {
+			isa = PBXGroup;
+			children = (
+				D998F910273155FE000EA384 /* Cells */,
+			);
+			path = Subviews;
+			sourceTree = "<group>";
+		};
+		D998F90D2730A01C000EA384 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				D998F916273416E3000EA384 /* Extensions */,
+				D998F9132731588F000EA384 /* Protocols */,
+				D998F90E2730A054000EA384 /* Button.swift */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		D998F910273155FE000EA384 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				D998F91127315792000EA384 /* DeviceCollectionViewCell.swift */,
+				D9C7C5402770BABF0064D9BD /* DeviceModeCollectionViewCell.swift.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		D998F9132731588F000EA384 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				D998F914273158A1000EA384 /* Reusable.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
+		D998F916273416E3000EA384 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				D998F91727341701000EA384 /* UIView+Extensions.swift */,
+				D998F9192734171E000EA384 /* UIColor+Extensions.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		D9EF30942683BF94009761A9 = {
@@ -132,6 +222,7 @@
 		D9EF309F2683BF94009761A9 /* LightsOut */ = {
 			isa = PBXGroup;
 			children = (
+				D998F90D2730A01C000EA384 /* Common */,
 				D97EECDE272B6B48008DA06A /* Models */,
 				D91B39BB272AAD28007ED8B0 /* Scenes */,
 				D91B39BA272AAD1D007ED8B0 /* Services */,
@@ -164,6 +255,9 @@
 			dependencies = (
 			);
 			name = LightsOut;
+			packageProductDependencies = (
+				D97D508527709727003D677A /* Moya */,
+			);
 			productName = LightsOut;
 			productReference = D9EF309D2683BF94009761A9 /* LightsOut.app */;
 			productType = "com.apple.product-type.application";
@@ -192,6 +286,9 @@
 				Base,
 			);
 			mainGroup = D9EF30942683BF94009761A9;
+			packageReferences = (
+				D97D508427709727003D677A /* XCRemoteSwiftPackageReference "Moya" */,
+			);
 			productRefGroup = D9EF309E2683BF94009761A9 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -219,15 +316,26 @@
 			buildActionMask = 2147483647;
 			files = (
 				0ABB5740269FA0A300C957DE /* GCDAsyncSocket.m in Sources */,
+				D97D50892770A22D003D677A /* ColorRequest.swift in Sources */,
 				D9EF30A52683BF94009761A9 /* MainViewController.swift in Sources */,
 				D9EF30A12683BF94009761A9 /* AppDelegate.swift in Sources */,
 				D93D1090272AF72D00453B3D /* HomeViewController.swift in Sources */,
 				D9EF30A32683BF94009761A9 /* SceneDelegate.swift in Sources */,
 				0ABB573C269F9EDC00C957DE /* BonjourServer.swift in Sources */,
+				D9C7C53F2770B0440064D9BD /* DeviceNetwork.swift in Sources */,
+				D9C7C5412770BABF0064D9BD /* DeviceModeCollectionViewCell.swift.swift in Sources */,
+				D9C7C5432771582C0064D9BD /* BitmapRequest.swift in Sources */,
+				D97D508B2770A2E9003D677A /* RainbowRequest.swift in Sources */,
+				D998F915273158A1000EA384 /* Reusable.swift in Sources */,
 				D9EF30B52683CD56009761A9 /* DeviceDetailsViewController.swift in Sources */,
-				D91B39BD272AAD43007ED8B0 /* NetworkService.swift in Sources */,
+				D998F90F2730A054000EA384 /* Button.swift in Sources */,
+				D915664B2739846000E88EC4 /* DeviceResponse.swift in Sources */,
+				D998F91227315792000EA384 /* DeviceCollectionViewCell.swift in Sources */,
+				D998F91A2734171E000EA384 /* UIColor+Extensions.swift in Sources */,
+				D9C7C53D2770AA4B0064D9BD /* FireRequest.swift in Sources */,
 				D97EECE3272B6DE0008DA06A /* DeviceCell.swift.swift in Sources */,
-				D97EECDD272B581C008DA06A /* StoreService.swift.swift in Sources */,
+				D998F91827341701000EA384 /* UIView+Extensions.swift in Sources */,
+				D97EECDD272B581C008DA06A /* StoreService.swift in Sources */,
 				D97EECE0272B6B5B008DA06A /* Device.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -429,6 +537,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		D97D508427709727003D677A /* XCRemoteSwiftPackageReference "Moya" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Moya/Moya";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		D97D508527709727003D677A /* Moya */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D97D508427709727003D677A /* XCRemoteSwiftPackageReference "Moya" */;
+			productName = Moya;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = D9EF30952683BF94009761A9 /* Project object */;
 }

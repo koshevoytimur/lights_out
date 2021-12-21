@@ -10,7 +10,7 @@ import UIKit
 class MainViewController: UIViewController {
 
   private var devices: [Device] = []
-  private let server = BonjourServer()
+  private lazy var server = BonjourServer()
 
   private let tableView: UITableView = {
     let table = UITableView(frame: .zero, style: .insetGrouped)
