@@ -29,7 +29,9 @@
 		D9CE4D9C2771E056009C57B8 /* DeviceDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9CE4D9B2771E056009C57B8 /* DeviceDetailsViewModel.swift */; };
 		D9CE4D9E2771E37E009C57B8 /* DeviceDetailsHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9CE4D9D2771E37E009C57B8 /* DeviceDetailsHeaderView.swift */; };
 		D9D42EDB2771EB0800CC6336 /* CombineCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = D9D42EDA2771EB0800CC6336 /* CombineCocoa */; };
-		D9D42EDE2772155500CC6336 /* Throttler in Frameworks */ = {isa = PBXBuildFile; productRef = D9D42EDD2772155500CC6336 /* Throttler */; };
+		D9D42EE12772177600CC6336 /* SemiModalPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9D42EE02772177600CC6336 /* SemiModalPresentationController.swift */; };
+		D9D42EE32772179700CC6336 /* SemiModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9D42EE22772179700CC6336 /* SemiModalViewController.swift */; };
+		D9D42EE62772193600CC6336 /* BitmapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9D42EE52772193600CC6336 /* BitmapViewController.swift */; };
 		D9EF30A12683BF94009761A9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9EF30A02683BF94009761A9 /* AppDelegate.swift */; };
 		D9EF30A32683BF94009761A9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9EF30A22683BF94009761A9 /* SceneDelegate.swift */; };
 		D9EF30A52683BF94009761A9 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9EF30A42683BF94009761A9 /* MainViewController.swift */; };
@@ -61,6 +63,9 @@
 		D9C7C5422771582C0064D9BD /* BitmapRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BitmapRequest.swift; sourceTree = "<group>"; };
 		D9CE4D9B2771E056009C57B8 /* DeviceDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceDetailsViewModel.swift; sourceTree = "<group>"; };
 		D9CE4D9D2771E37E009C57B8 /* DeviceDetailsHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceDetailsHeaderView.swift; sourceTree = "<group>"; };
+		D9D42EE02772177600CC6336 /* SemiModalPresentationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SemiModalPresentationController.swift; sourceTree = "<group>"; };
+		D9D42EE22772179700CC6336 /* SemiModalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SemiModalViewController.swift; sourceTree = "<group>"; };
+		D9D42EE52772193600CC6336 /* BitmapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BitmapViewController.swift; sourceTree = "<group>"; };
 		D9EF309D2683BF94009761A9 /* LightsOut.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LightsOut.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D9EF30A02683BF94009761A9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D9EF30A22683BF94009761A9 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -76,7 +81,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D9D42EDE2772155500CC6336 /* Throttler in Frameworks */,
 				D9D42EDB2771EB0800CC6336 /* CombineCocoa in Frameworks */,
 				D97D508627709727003D677A /* Moya in Frameworks */,
 			);
@@ -134,6 +138,7 @@
 				D9EF30B42683CD56009761A9 /* DeviceDetailsViewController.swift */,
 				D9CE4D9B2771E056009C57B8 /* DeviceDetailsViewModel.swift */,
 				D998F90C2730A00F000EA384 /* Subviews */,
+				D9D42EE42772192B00CC6336 /* Bitmap */,
 			);
 			path = DeviceDetails;
 			sourceTree = "<group>";
@@ -180,6 +185,7 @@
 		D998F90D2730A01C000EA384 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				D9D42EDF2772176900CC6336 /* Views */,
 				D998F916273416E3000EA384 /* Extensions */,
 				D998F9132731588F000EA384 /* Protocols */,
 				D998F90E2730A054000EA384 /* Button.swift */,
@@ -211,6 +217,23 @@
 				D998F9192734171E000EA384 /* UIColor+Extensions.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		D9D42EDF2772176900CC6336 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				D9D42EE02772177600CC6336 /* SemiModalPresentationController.swift */,
+				D9D42EE22772179700CC6336 /* SemiModalViewController.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		D9D42EE42772192B00CC6336 /* Bitmap */ = {
+			isa = PBXGroup;
+			children = (
+				D9D42EE52772193600CC6336 /* BitmapViewController.swift */,
+			);
+			path = Bitmap;
 			sourceTree = "<group>";
 		};
 		D9EF30942683BF94009761A9 = {
@@ -268,7 +291,6 @@
 			packageProductDependencies = (
 				D97D508527709727003D677A /* Moya */,
 				D9D42EDA2771EB0800CC6336 /* CombineCocoa */,
-				D9D42EDD2772155500CC6336 /* Throttler */,
 			);
 			productName = LightsOut;
 			productReference = D9EF309D2683BF94009761A9 /* LightsOut.app */;
@@ -301,7 +323,6 @@
 			packageReferences = (
 				D97D508427709727003D677A /* XCRemoteSwiftPackageReference "Moya" */,
 				D9D42ED92771EB0800CC6336 /* XCRemoteSwiftPackageReference "CombineCocoa" */,
-				D9D42EDC2772155500CC6336 /* XCRemoteSwiftPackageReference "Throttler" */,
 			);
 			productRefGroup = D9EF309E2683BF94009761A9 /* Products */;
 			projectDirPath = "";
@@ -335,6 +356,7 @@
 				D9EF30A12683BF94009761A9 /* AppDelegate.swift in Sources */,
 				D93D1090272AF72D00453B3D /* HomeViewController.swift in Sources */,
 				D9EF30A32683BF94009761A9 /* SceneDelegate.swift in Sources */,
+				D9D42EE32772179700CC6336 /* SemiModalViewController.swift in Sources */,
 				0ABB573C269F9EDC00C957DE /* BonjourServer.swift in Sources */,
 				D9C7C53F2770B0440064D9BD /* DeviceNetwork.swift in Sources */,
 				D9C7C5412770BABF0064D9BD /* DeviceModeCollectionViewCell.swift.swift in Sources */,
@@ -345,12 +367,14 @@
 				D9EF30B52683CD56009761A9 /* DeviceDetailsViewController.swift in Sources */,
 				D998F90F2730A054000EA384 /* Button.swift in Sources */,
 				D915664B2739846000E88EC4 /* DeviceResponse.swift in Sources */,
+				D9D42EE62772193600CC6336 /* BitmapViewController.swift in Sources */,
 				D998F91227315792000EA384 /* DeviceCollectionViewCell.swift in Sources */,
 				D998F91A2734171E000EA384 /* UIColor+Extensions.swift in Sources */,
 				D9CE4D9E2771E37E009C57B8 /* DeviceDetailsHeaderView.swift in Sources */,
 				D9C7C53D2770AA4B0064D9BD /* FireRequest.swift in Sources */,
 				D97EECE3272B6DE0008DA06A /* DeviceCell.swift.swift in Sources */,
 				D998F91827341701000EA384 /* UIView+Extensions.swift in Sources */,
+				D9D42EE12772177600CC6336 /* SemiModalPresentationController.swift in Sources */,
 				D97EECDD272B581C008DA06A /* StoreService.swift in Sources */,
 				D97EECE0272B6B5B008DA06A /* Device.swift in Sources */,
 			);
@@ -571,14 +595,6 @@
 				minimumVersion = 0.4.0;
 			};
 		};
-		D9D42EDC2772155500CC6336 /* XCRemoteSwiftPackageReference "Throttler" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/boraseoksoon/Throttler";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.0;
-			};
-		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -591,11 +607,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = D9D42ED92771EB0800CC6336 /* XCRemoteSwiftPackageReference "CombineCocoa" */;
 			productName = CombineCocoa;
-		};
-		D9D42EDD2772155500CC6336 /* Throttler */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = D9D42EDC2772155500CC6336 /* XCRemoteSwiftPackageReference "Throttler" */;
-			productName = Throttler;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

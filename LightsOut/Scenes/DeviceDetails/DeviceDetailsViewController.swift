@@ -132,6 +132,8 @@ extension DeviceDetailsViewController: UICollectionViewDelegate {
       case 3:
         // bitmap
         device.bitmap()
+        let vc = BitmapViewController(device: device)
+        navigationController?.pushViewController(vc, animated: true)
       case 4:
         // xmas
         device.xmas()
