@@ -8,6 +8,7 @@
 import UIKit
 import Moya
 import Combine
+import Throttler
 
 class DeviceDetailsViewController: UIViewController {
   private let viewModel = DeviceDetailsViewModel()
@@ -153,7 +154,9 @@ extension DeviceDetailsViewController: UICollectionViewDataSource {
 
 extension DeviceDetailsViewController: UIColorPickerViewControllerDelegate {
   func colorPickerViewControllerDidSelectColor(_ viewController: UIColorPickerViewController) {
-    device.color(color: viewController.selectedColor.hexString())
-    updateDeviceStatus()
+    Throttler.go(delay: 0.5) { [weak self] in
+      self?.device.color(color: viewController.selectedColor.hexString())
+      self?.updateDeviceStatus()
+    }
   }
 }

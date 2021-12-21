@@ -29,6 +29,7 @@
 		D9CE4D9C2771E056009C57B8 /* DeviceDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9CE4D9B2771E056009C57B8 /* DeviceDetailsViewModel.swift */; };
 		D9CE4D9E2771E37E009C57B8 /* DeviceDetailsHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9CE4D9D2771E37E009C57B8 /* DeviceDetailsHeaderView.swift */; };
 		D9D42EDB2771EB0800CC6336 /* CombineCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = D9D42EDA2771EB0800CC6336 /* CombineCocoa */; };
+		D9D42EDE2772155500CC6336 /* Throttler in Frameworks */ = {isa = PBXBuildFile; productRef = D9D42EDD2772155500CC6336 /* Throttler */; };
 		D9EF30A12683BF94009761A9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9EF30A02683BF94009761A9 /* AppDelegate.swift */; };
 		D9EF30A32683BF94009761A9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9EF30A22683BF94009761A9 /* SceneDelegate.swift */; };
 		D9EF30A52683BF94009761A9 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9EF30A42683BF94009761A9 /* MainViewController.swift */; };
@@ -75,6 +76,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D9D42EDE2772155500CC6336 /* Throttler in Frameworks */,
 				D9D42EDB2771EB0800CC6336 /* CombineCocoa in Frameworks */,
 				D97D508627709727003D677A /* Moya in Frameworks */,
 			);
@@ -266,6 +268,7 @@
 			packageProductDependencies = (
 				D97D508527709727003D677A /* Moya */,
 				D9D42EDA2771EB0800CC6336 /* CombineCocoa */,
+				D9D42EDD2772155500CC6336 /* Throttler */,
 			);
 			productName = LightsOut;
 			productReference = D9EF309D2683BF94009761A9 /* LightsOut.app */;
@@ -298,6 +301,7 @@
 			packageReferences = (
 				D97D508427709727003D677A /* XCRemoteSwiftPackageReference "Moya" */,
 				D9D42ED92771EB0800CC6336 /* XCRemoteSwiftPackageReference "CombineCocoa" */,
+				D9D42EDC2772155500CC6336 /* XCRemoteSwiftPackageReference "Throttler" */,
 			);
 			productRefGroup = D9EF309E2683BF94009761A9 /* Products */;
 			projectDirPath = "";
@@ -567,6 +571,14 @@
 				minimumVersion = 0.4.0;
 			};
 		};
+		D9D42EDC2772155500CC6336 /* XCRemoteSwiftPackageReference "Throttler" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/boraseoksoon/Throttler";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -579,6 +591,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = D9D42ED92771EB0800CC6336 /* XCRemoteSwiftPackageReference "CombineCocoa" */;
 			productName = CombineCocoa;
+		};
+		D9D42EDD2772155500CC6336 /* Throttler */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D9D42EDC2772155500CC6336 /* XCRemoteSwiftPackageReference "Throttler" */;
+			productName = Throttler;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
