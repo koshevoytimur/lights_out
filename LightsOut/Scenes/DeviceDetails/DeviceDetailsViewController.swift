@@ -8,7 +8,6 @@
 import UIKit
 import Moya
 import Combine
-import Throttler
 
 class DeviceDetailsViewController: UIViewController {
   private let viewModel = DeviceDetailsViewModel()
@@ -28,6 +27,9 @@ class DeviceDetailsViewController: UIViewController {
     collectionView.register(cell: DeviceModeCollectionViewCell.self)
     return collectionView
   }()
+
+  private lazy var colorSelectedPublisher = colorSelectedSubject.eraseToAnyPublisher()
+  private let colorSelectedSubject = PassthroughSubject<UIColor, Never>()
 
   private var cancellables: Set<AnyCancellable> = []
 
@@ -63,6 +65,14 @@ class DeviceDetailsViewController: UIViewController {
     headerView.turnOffPublisher.sink { [weak self] _ in
       self?.device.turnOff()
       self?.updateDeviceStatus()
+    }.store(in: &cancellables)
+
+    colorSelectedPublisher
+      .throttle(for: 0.2, scheduler: DispatchQueue.main, latest: true)
+      .sink { [weak self] color in
+      guard let self = self else { return }
+      self.device.color(color: color.hexString())
+      self.updateDeviceStatus()
     }.store(in: &cancellables)
   }
 
@@ -154,9 +164,6 @@ extension DeviceDetailsViewController: UICollectionViewDataSource {
 
 extension DeviceDetailsViewController: UIColorPickerViewControllerDelegate {
   func colorPickerViewControllerDidSelectColor(_ viewController: UIColorPickerViewController) {
-    Throttler.go(delay: 0.5) { [weak self] in
-      self?.device.color(color: viewController.selectedColor.hexString())
-      self?.updateDeviceStatus()
-    }
+    colorSelectedSubject.send(viewController.selectedColor)
   }
 }
