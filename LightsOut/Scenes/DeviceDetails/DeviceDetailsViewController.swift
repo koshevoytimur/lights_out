@@ -33,7 +33,7 @@ class DeviceDetailsViewController: UIViewController {
 
   private var cancellables: Set<AnyCancellable> = []
 
-  let device: Device
+  var device: Device
 
   init(device: Device) {
     self.device = device
@@ -98,6 +98,9 @@ class DeviceDetailsViewController: UIViewController {
 
   private func showPicker() {
     colorPicker.view.backgroundColor = .systemBackground
+    if let color = device.info?.settings?.color {
+      colorPicker.selectedColor = UIColor(hexRGB: color)
+    }
     navigationController?.pushViewController(colorPicker, animated: true)
   }
 
@@ -106,6 +109,7 @@ class DeviceDetailsViewController: UIViewController {
       guard let self = self else { return }
       switch result {
       case .success(let info):
+        self.device.info = info
         DispatchQueue.main.async {
           let mode = info.settings?.color == "000000" ? "Disabled" : info.mode.title
           self.headerView.render(props: .init(title: info.name, mode: mode, numLeds: info.numLeds))
