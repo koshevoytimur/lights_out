@@ -91,6 +91,8 @@ class BitmapViewController: UIViewController {
   private func setupTableView() {
     tableView.delegate = self
     tableView.dataSource = self
+    tableView.dragDelegate = self
+    tableView.dragInteractionEnabled = true
     tableView.register(DeviceCell.self, forCellReuseIdentifier: DeviceCell.id)
     view.addSubview(tableView)
     NSLayoutConstraint.activate([
@@ -184,7 +186,7 @@ extension BitmapViewController {
   }
 }
 
-extension BitmapViewController: UITableViewDelegate, UITableViewDataSource {
+extension BitmapViewController: UITableViewDelegate, UITableViewDataSource, UITableViewDragDelegate {
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     return items.count
   }
@@ -198,6 +200,17 @@ extension BitmapViewController: UITableViewDelegate, UITableViewDataSource {
     cell.contentConfiguration = content
 
     return cell
+  }
+
+  func tableView(_ tableView: UITableView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
+    let dragItem = UIDragItem(itemProvider: NSItemProvider())
+    dragItem.localObject = items[indexPath.row]
+    return [dragItem]
+  }
+
+  func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+    let mover = items.remove(at: sourceIndexPath.row)
+    items.insert(mover, at: destinationIndexPath.row)
   }
 
   func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
