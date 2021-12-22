@@ -17,6 +17,14 @@ struct Device: Hashable, Codable {
   let address: String
   var info: DeviceResponse?
 
+  var lastModeKey: String {
+    return "\(name)last_mode"
+  }
+
+  var lastModeParamsKey: String {
+    return "\(name)last_mode_params"
+  }
+
   private var url: URL? {
     URL(string: "http://" + address)
   }
@@ -118,33 +126,33 @@ struct Device: Hashable, Codable {
 
   private func saveMode(mode: DeviceMode) {
     let store = StoreService()
-    store.saveStr(mode.rawValue, key: "last_mode")
+    store.saveStr(mode.rawValue, key: lastModeKey)
   }
 
   private func saveMode<T: Encodable>(mode: DeviceMode, params: T? = nil) {
     let store = StoreService()
-    store.saveStr(mode.rawValue, key: "last_mode")
-    store.save(params, key: "last_mode_params")
+    store.saveStr(mode.rawValue, key: lastModeKey)
+    store.save(params, key: lastModeParamsKey)
   }
 
   func turnOnLastMode() {
     let store = StoreService()
-    guard let modeStr = store.fetchStr(key: "last_mode"),
+    guard let modeStr = store.fetchStr(key: lastModeKey),
           let mode = DeviceMode(rawValue: modeStr)
     else { return }
 
     switch mode {
     case .color:
-      guard let params = store.fetch(ColorRequest.self, key: "last_mode_params") else { return }
+      guard let params = store.fetch(ColorRequest.self, key: lastModeParamsKey) else { return }
       color(color: params.color)
     case .rainbow:
-      guard let params = store.fetch(RainbowRequest.self, key: "last_mode_params") else { return }
+      guard let params = store.fetch(RainbowRequest.self, key: lastModeParamsKey) else { return }
       rainbow(params)
     case .fire:
-      guard let params = store.fetch(FireRequest.self, key: "last_mode_params") else { return }
+      guard let params = store.fetch(FireRequest.self, key: lastModeParamsKey) else { return }
       fire(params)
     case .bitmap:
-      guard let params = store.fetch(BitmapRequest.self, key: "last_mode_params") else { return }
+      guard let params = store.fetch(BitmapRequest.self, key: lastModeParamsKey) else { return }
       bitmap(params)
     case .xmas:
       xmas()
