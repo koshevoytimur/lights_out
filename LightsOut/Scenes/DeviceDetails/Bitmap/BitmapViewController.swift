@@ -5,39 +5,43 @@
 //  Created by Essence K on 21.12.2021.
 //
 
+// MARK: - Definitely need refactoring
+
 import UIKit
 
-struct BitmapVector {
-  let colors: [[Int]]
+struct BitmapVector: Codable {
+  var colors: [[Int]]
 
-  //  public var color: UIColor {
-  //    guard colors.count == 3,
-  //          let firstItem = colors.first,
-  //          let color = UIColor(
-  //            red: firstItem[0],
-  //            green: <#T##CGFloat#>,
-  //            blue: <#T##CGFloat#>,
-  //            alpha: <#T##CGFloat#>
-  //          )
-  //    else { return UIColor.black }
-  //
-  //  }
+  func color() -> UIColor? {
+    return UIColor(
+      red: CGFloat(colors.first?[0] ?? 1) / 255,
+      green: CGFloat(colors.first?[1] ?? 1) / 255,
+      blue: CGFloat(colors.first?[2] ?? 1) / 255,
+      alpha: 1
+    )
+  }
 }
 
 class BitmapViewController: UIViewController {
 
+  private let store = StoreService()
+
+  private let reuseIdentifier = "BitmapCell"
   private let colorPicker = UIColorPickerViewController()
   
-  private let tableView: UITableView = {
+  private lazy var tableView: UITableView = {
     let table = UITableView(frame: .zero, style: .insetGrouped)
     table.translatesAutoresizingMaskIntoConstraints = false
+    table.register(UITableViewCell.self, forCellReuseIdentifier: reuseIdentifier)
     return table
   }()
 
-  private var vectors: [[Int]] = []
+  private var items: [BitmapVector] = []
 
   private var selectedAmount: Int = 0
   private var selectedColor: UIColor = .black
+
+  private var indexPathForEdit: IndexPath?
 
   private let device: Device
 
@@ -53,18 +57,38 @@ class BitmapViewController: UIViewController {
   }
 
   private func setup() {
+    colorPicker.delegate = self
+    setupNavigationBar()
     setupView()
+  }
+
+  private func setupNavigationBar() {
+    let send = UIBarButtonItem(
+      title: "Send", style: .plain, target: self, action: #selector(send)
+    )
+
+    let add = UIBarButtonItem(
+      title: "Add", style: .plain, target: self, action: #selector(add)
+    )
+
+    let load = UIBarButtonItem(
+      title: "Load", style: .plain, target: self, action: #selector(load)
+    )
+
+    let save = UIBarButtonItem(
+      title: "Save", style: .plain, target: self, action: #selector(save)
+    )
+
+    navigationItem.rightBarButtonItems = [send, add, load, save]
   }
 
   private func setupView() {
     view.backgroundColor = .systemBackground
+    
+    setupTableView()
+  }
 
-    navigationItem.rightBarButtonItem = UIBarButtonItem(
-      title: "Add", style: .plain, target: self, action: #selector(addTapped)
-    )
-
-    colorPicker.delegate = self
-
+  private func setupTableView() {
     tableView.delegate = self
     tableView.dataSource = self
     tableView.register(DeviceCell.self, forCellReuseIdentifier: DeviceCell.id)
@@ -75,13 +99,6 @@ class BitmapViewController: UIViewController {
       tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
       tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
     ])
-    tableView.reloadData()
-
-    let button = UIButton()
-    button.backgroundColor = .red
-    button.frame = CGRect(x: 100, y: 100, width: 100, height: 100)
-    button.addTarget(self, action: #selector(sendTapped), for: .touchUpInside)
-    view.addSubview(button)
   }
 
   private func showPicker() {
@@ -100,21 +117,44 @@ class BitmapViewController: UIViewController {
     }
 
     alert.addAction(UIAlertAction(title: "ok", style: .default, handler: { [weak self] (_) in
-      let textField = alert.textFields![0]
-      print("Text field: \(textField.text)")
-      self?.selectedAmount = Int(textField.text ?? "") ?? 0
-      self?.showPicker()
+      guard let self = self,
+            let textField = alert.textFields?.first,
+            let text = textField.text,
+            !text.isEmpty,
+            let amount = Int(text)
+      else { return }
+      self.selectedAmount = amount
+      self.showPicker()
     }))
 
     self.present(alert, animated: true, completion: nil)
   }
 
   private func appendArray(amount: Int, color: UIColor) {
-    var vector: [[Int]] = []
-    for _ in 0 ... amount {
-      vector.append(colorToRGB(color))
+    var colors: [[Int]] = []
+    for _ in 0 ..< amount {
+      colors.append(color.toRGB())
     }
-    self.vectors.append(contentsOf: vector)
+    let bitmapVector = BitmapVector(colors: colors)
+    tableView.beginUpdates()
+    guard let index = self.indexPathForEdit?.row else {
+      self.items.append(bitmapVector)
+      tableView.insertRows(at: [IndexPath(row: items.count - 1, section: 0)], with: .fade)
+      tableView.endUpdates()
+      return
+    }
+    self.items.insert(bitmapVector, at: index)
+    tableView.insertRows(at: [IndexPath(row: index, section: 0)], with: .fade)
+    tableView.endUpdates()
+    indexPathForEdit = nil
+  }
+
+  private func makeBitmapRequest() -> BitmapRequest {
+    var colors: [[Int]] = []
+    for color in self.items {
+      colors += color.colors
+    }
+    return BitmapRequest(colors: colors)
   }
 
   @available(*, unavailable)
@@ -125,27 +165,71 @@ class BitmapViewController: UIViewController {
 
 @objc
 extension BitmapViewController {
-  private func addTapped() {
+  private func add() {
     showAlert()
   }
 
-  private func sendTapped() {
-    device.bitmap(colors: vectors)
+  private func send() {
+    device.bitmap(makeBitmapRequest())
+  }
+
+  private func load() {
+    guard let params = store.fetch([BitmapVector].self, key: "bitmap_request") else { return }
+    items = params
+    tableView.reloadData()
+  }
+
+  private func save() {
+    store.save(items, key: "bitmap_request")
   }
 }
 
 extension BitmapViewController: UITableViewDelegate, UITableViewDataSource {
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return 0
+    return items.count
   }
 
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    //    guard let  cell = tableView.dequeueReusableCell(withIdentifier: DeviceCell.id) as? DeviceCell else {
-    return UITableViewCell()
-    //    }
-    //    cell.detailTextLabel?.text = devices[indexPath.row].name
-    //    cell.textLabel?.text = devices[indexPath.row].name
-    //    return cell
+    let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath)
+    var content = cell.defaultContentConfiguration()
+
+    content.text = "Count: \(items[indexPath.row].colors.count)"
+    cell.backgroundColor = items[indexPath.row].color()
+    cell.contentConfiguration = content
+
+    return cell
+  }
+
+  func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+
+    let edit = UIContextualAction(style: .normal, title: "Edit") { [weak self] (_, _, completion) in
+      let item = self?.items[indexPath.row]
+      self?.indexPathForEdit = indexPath
+      self?.selectedAmount = item?.colors.count ?? 0
+      self?.selectedColor = item?.color() ?? .black
+      self?.items.remove(at: indexPath.row)
+      self?.tableView.deleteRows(at: [indexPath], with: .automatic)
+      self?.showAlert()
+      completion(true)
+    }
+
+    return UISwipeActionsConfiguration(actions: [edit])
+  }
+
+  func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+    let delete =  UIContextualAction(style: .destructive, title: "Delete") { [weak self] (_, _, completion) in
+      self?.items.remove(at: indexPath.row)
+      self?.tableView.deleteRows(at: [indexPath], with: .automatic)
+      completion(true)
+    }
+
+    let insert = UIContextualAction(style: .normal, title: "Insert") { [weak self] (_, _, completion) in
+      self?.indexPathForEdit = IndexPath(row: indexPath.row + 1, section: indexPath.section)
+      self?.showAlert()
+      completion(true)
+    }
+
+    return UISwipeActionsConfiguration(actions: [delete, insert])
   }
 
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -155,26 +239,10 @@ extension BitmapViewController: UITableViewDelegate, UITableViewDataSource {
 
 extension BitmapViewController: UIColorPickerViewControllerDelegate {
   func colorPickerViewControllerDidSelectColor(_ viewController: UIColorPickerViewController) {
-    print(colorToRGB(viewController.selectedColor))
     selectedColor = viewController.selectedColor
   }
 
   func colorPickerViewControllerDidFinish(_ viewController: UIColorPickerViewController) {
     appendArray(amount: selectedAmount, color: selectedColor)
-  }
-
-  func colorToRGB(_ color: UIColor) -> [Int] {
-    var red = Int(color.rgba.red * color.rgba.alpha * 255)
-    red = min(red, 255)
-    red = max(red, 0)
-
-    var blue = Int(color.rgba.blue * color.rgba.alpha * 255)
-    blue = min(blue, 255)
-    blue = max(blue, 0)
-
-    var green = Int(color.rgba.green * color.rgba.alpha * 255)
-    green = min(green, 255)
-    green = max(green, 0)
-    return [red, green, blue]
   }
 }

@@ -14,6 +14,7 @@ class DeviceDetailsHeaderView: UIView {
   struct Props {
     let title: String
     let mode: String
+    let numLeds: Int
   }
 
   var turnOnPublisher: AnyPublisher<Void, Never> {
@@ -33,6 +34,14 @@ class DeviceDetailsHeaderView: UIView {
     return label
   }()
   private lazy var modeLabel: UILabel = {
+    let label = UILabel()
+    label.textAlignment = .natural
+    label.font = .boldSystemFont(ofSize: 12)
+    label.adjustsFontSizeToFitWidth = true
+    label.minimumScaleFactor = 0.5
+    return label
+  }()
+  private lazy var numLedsLabel: UILabel = {
     let label = UILabel()
     label.textAlignment = .natural
     label.font = .boldSystemFont(ofSize: 12)
@@ -71,17 +80,25 @@ class DeviceDetailsHeaderView: UIView {
     setupTitleLabel()
     setupModeLabel()
     setupButtons()
+    setupNumLedsLabel()
   }
 
   private func setupTitleLabel() {
-    addSubview(titleLabel, leading: 20, top: 20)
+    addSubview(titleLabel, leading: 10, top: 20)
   }
 
   private func setupModeLabel() {
     addSubview(modeLabel, constraints: [
-      modeLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 16),
-      modeLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
-      modeLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -20)
+      modeLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 10),
+      modeLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor)
+    ])
+  }
+
+  private func setupNumLedsLabel() {
+    addSubview(numLedsLabel, constraints: [
+      numLedsLabel.topAnchor.constraint(equalTo: modeLabel.bottomAnchor, constant: 8),
+      numLedsLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
+      numLedsLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -20)
     ])
   }
 
@@ -94,6 +111,7 @@ class DeviceDetailsHeaderView: UIView {
   public func render(props: Props) {
     titleLabel.text = props.title
     modeLabel.text = "Current mode: " + props.mode
+    numLedsLabel.text = "Number of leds: " + "\(props.numLeds)"
   }
 
   @available(*, unavailable)

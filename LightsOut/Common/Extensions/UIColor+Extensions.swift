@@ -53,4 +53,19 @@ extension UIColor {
 
       return (red, green, blue, alpha)
   }
+
+  func toRGB() -> [Int] {
+    var red = Int(rgba.red * rgba.alpha * 255)
+    red = min(red, 255)
+    red = max(red, 0)
+
+    var blue = Int(rgba.blue * rgba.alpha * 255)
+    blue = min(blue, 255)
+    blue = max(blue, 0)
+
+    var green = Int(rgba.green * rgba.alpha * 255)
+    green = min(green, 255)
+    green = max(green, 0)
+    return [red, green, blue]
+  }
 }

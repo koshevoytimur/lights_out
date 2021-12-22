@@ -42,10 +42,9 @@ struct Device: Hashable, Codable {
     }
   }
 
-  func rainbow(speed: Double = 1, brightness: Int = 255) {
+  func rainbow(_ params: RainbowRequest = RainbowRequest()) {
     guard let url = self.url else { return }
     let provider = MoyaProvider<DeviceNetwork>()
-    let params = RainbowRequest(speed: speed, brightness: brightness)
     saveMode(mode: .rainbow, params: params)
     provider.request(.rainbow(params, url)) { result in
       switch result {
@@ -57,18 +56,9 @@ struct Device: Hashable, Codable {
     }
   }
 
-  func fire(
-    minBrightness: Int = 90,
-    maxBrightness: Int = 255,
-    msPerFrame: Int = 17
-  ) {
+  func fire(_ params: FireRequest = FireRequest()) {
     guard let url = self.url else { return }
     let provider = MoyaProvider<DeviceNetwork>()
-    let params = FireRequest(
-      minBrightness: minBrightness,
-      maxBrightness: maxBrightness,
-      msPerFrame: msPerFrame
-    )
     saveMode(mode: .fire, params: params)
     provider.request(.fire(params, url)) { result in
       switch result {
@@ -94,10 +84,9 @@ struct Device: Hashable, Codable {
     }
   }
 
-  func bitmap(colors: [[Int]] = testColors) {
+  func bitmap(_ params: BitmapRequest) {
     guard let url = self.url else { return }
     let provider = MoyaProvider<DeviceNetwork>()
-    let params = BitmapRequest(colors: colors)
     saveMode(mode: .bitmap, params: params)
     provider.request(.bitmap(params, url)) { result in
       switch result {
@@ -150,17 +139,13 @@ struct Device: Hashable, Codable {
       color(color: params.color)
     case .rainbow:
       guard let params = store.fetch(RainbowRequest.self, key: "last_mode_params") else { return }
-      rainbow(speed: params.speed, brightness: params.brightness)
+      rainbow(params)
     case .fire:
       guard let params = store.fetch(FireRequest.self, key: "last_mode_params") else { return }
-      fire(
-        minBrightness: params.minBrightness,
-        maxBrightness: params.maxBrightness,
-        msPerFrame: params.msPerFrame
-      )
+      fire(params)
     case .bitmap:
       guard let params = store.fetch(BitmapRequest.self, key: "last_mode_params") else { return }
-      bitmap(colors: params.colors)
+      bitmap(params)
     case .xmas:
       xmas()
     case .ambi:

@@ -108,7 +108,7 @@ class DeviceDetailsViewController: UIViewController {
       case .success(let info):
         DispatchQueue.main.async {
           let mode = info.settings?.color == "000000" ? "Disabled" : info.mode.title
-          self.headerView.render(props: .init(title: info.name, mode: mode))
+          self.headerView.render(props: .init(title: info.name, mode: mode, numLeds: info.numLeds))
         }
       case .failure(let error):
         print(error.localizedDescription)
@@ -131,7 +131,6 @@ extension DeviceDetailsViewController: UICollectionViewDelegate {
         device.fire()
       case 3:
         // bitmap
-        device.bitmap()
         let vc = BitmapViewController(device: device)
         navigationController?.pushViewController(vc, animated: true)
       case 4:
