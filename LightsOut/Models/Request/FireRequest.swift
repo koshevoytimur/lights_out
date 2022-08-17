@@ -16,7 +16,7 @@ struct FireRequest: Codable, Hashable {
   init(
     minBrightness: Int = 70,
     maxBrightness: Int = 255,
-    msPerFrame: Int = 20
+    msPerFrame: Int = 50
   ) {
     self.minBrightness = minBrightness
     self.maxBrightness = maxBrightness

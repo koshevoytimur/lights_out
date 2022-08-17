@@ -11,13 +11,16 @@
 		0ABB5740269FA0A300C957DE /* GCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ABB573F269FA0A300C957DE /* GCDAsyncSocket.m */; };
 		D915664B2739846000E88EC4 /* DeviceResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = D915664A2739846000E88EC4 /* DeviceResponse.swift */; };
 		D93D1090272AF72D00453B3D /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D93D108F272AF72D00453B3D /* HomeViewController.swift */; };
+		D9602A0B277387E1008265D0 /* RainbowViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9602A0A277387E1008265D0 /* RainbowViewController.swift */; };
 		D97D508627709727003D677A /* Moya in Frameworks */ = {isa = PBXBuildFile; productRef = D97D508527709727003D677A /* Moya */; };
 		D97D50892770A22D003D677A /* ColorRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D97D50882770A22D003D677A /* ColorRequest.swift */; };
 		D97D508B2770A2E9003D677A /* RainbowRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D97D508A2770A2E9003D677A /* RainbowRequest.swift */; };
 		D97EECDD272B581C008DA06A /* StoreService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D97EECDC272B581C008DA06A /* StoreService.swift */; };
 		D97EECE0272B6B5B008DA06A /* Device.swift in Sources */ = {isa = PBXBuildFile; fileRef = D97EECDF272B6B5B008DA06A /* Device.swift */; };
 		D97EECE3272B6DE0008DA06A /* DeviceCell.swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = D97EECE2272B6DE0008DA06A /* DeviceCell.swift.swift */; };
-		D998F90F2730A054000EA384 /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = D998F90E2730A054000EA384 /* Button.swift */; };
+		D98BF9EE28AB1D2D001D5335 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = D98BF9ED28AB1D2D001D5335 /* Theme.swift */; };
+		D98BF9F128AB2664001D5335 /* ComicSansMS.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D98BF9F028AB2664001D5335 /* ComicSansMS.ttf */; };
+		D98BF9F328AC5C4F001D5335 /* DeviceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D98BF9F228AC5C4F001D5335 /* DeviceService.swift */; };
 		D998F91227315792000EA384 /* DeviceCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D998F91127315792000EA384 /* DeviceCollectionViewCell.swift */; };
 		D998F915273158A1000EA384 /* Reusable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D998F914273158A1000EA384 /* Reusable.swift */; };
 		D998F91827341701000EA384 /* UIView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D998F91727341701000EA384 /* UIView+Extensions.swift */; };
@@ -32,6 +35,7 @@
 		D9D42EE12772177600CC6336 /* SemiModalPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9D42EE02772177600CC6336 /* SemiModalPresentationController.swift */; };
 		D9D42EE32772179700CC6336 /* SemiModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9D42EE22772179700CC6336 /* SemiModalViewController.swift */; };
 		D9D42EE62772193600CC6336 /* BitmapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9D42EE52772193600CC6336 /* BitmapViewController.swift */; };
+		D9EBF3212895BB6500FAD747 /* MainTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9EBF3202895BB6500FAD747 /* MainTableViewCell.swift */; };
 		D9EF30A12683BF94009761A9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9EF30A02683BF94009761A9 /* AppDelegate.swift */; };
 		D9EF30A32683BF94009761A9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9EF30A22683BF94009761A9 /* SceneDelegate.swift */; };
 		D9EF30A52683BF94009761A9 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9EF30A42683BF94009761A9 /* MainViewController.swift */; };
@@ -47,12 +51,15 @@
 		0ABB573F269FA0A300C957DE /* GCDAsyncSocket.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GCDAsyncSocket.m; sourceTree = "<group>"; };
 		D915664A2739846000E88EC4 /* DeviceResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceResponse.swift; sourceTree = "<group>"; };
 		D93D108F272AF72D00453B3D /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		D9602A0A277387E1008265D0 /* RainbowViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RainbowViewController.swift; sourceTree = "<group>"; };
 		D97D50882770A22D003D677A /* ColorRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorRequest.swift; sourceTree = "<group>"; };
 		D97D508A2770A2E9003D677A /* RainbowRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RainbowRequest.swift; sourceTree = "<group>"; };
 		D97EECDC272B581C008DA06A /* StoreService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreService.swift; sourceTree = "<group>"; };
 		D97EECDF272B6B5B008DA06A /* Device.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Device.swift; sourceTree = "<group>"; };
 		D97EECE2272B6DE0008DA06A /* DeviceCell.swift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceCell.swift.swift; sourceTree = "<group>"; };
-		D998F90E2730A054000EA384 /* Button.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
+		D98BF9ED28AB1D2D001D5335 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
+		D98BF9F028AB2664001D5335 /* ComicSansMS.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = ComicSansMS.ttf; sourceTree = "<group>"; };
+		D98BF9F228AC5C4F001D5335 /* DeviceService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceService.swift; sourceTree = "<group>"; };
 		D998F91127315792000EA384 /* DeviceCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceCollectionViewCell.swift; sourceTree = "<group>"; };
 		D998F914273158A1000EA384 /* Reusable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reusable.swift; sourceTree = "<group>"; };
 		D998F91727341701000EA384 /* UIView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extensions.swift"; sourceTree = "<group>"; };
@@ -66,6 +73,8 @@
 		D9D42EE02772177600CC6336 /* SemiModalPresentationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SemiModalPresentationController.swift; sourceTree = "<group>"; };
 		D9D42EE22772179700CC6336 /* SemiModalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SemiModalViewController.swift; sourceTree = "<group>"; };
 		D9D42EE52772193600CC6336 /* BitmapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BitmapViewController.swift; sourceTree = "<group>"; };
+		D9EBF31F2895BA6C00FAD747 /* LightsOut.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = LightsOut.entitlements; sourceTree = "<group>"; };
+		D9EBF3202895BB6500FAD747 /* MainTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTableViewCell.swift; sourceTree = "<group>"; };
 		D9EF309D2683BF94009761A9 /* LightsOut.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LightsOut.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D9EF30A02683BF94009761A9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D9EF30A22683BF94009761A9 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -101,6 +110,7 @@
 			isa = PBXGroup;
 			children = (
 				D97EECDC272B581C008DA06A /* StoreService.swift */,
+				D98BF9F228AC5C4F001D5335 /* DeviceService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -138,9 +148,18 @@
 				D9EF30B42683CD56009761A9 /* DeviceDetailsViewController.swift */,
 				D9CE4D9B2771E056009C57B8 /* DeviceDetailsViewModel.swift */,
 				D998F90C2730A00F000EA384 /* Subviews */,
+				D9602A09277387B0008265D0 /* Rainbow */,
 				D9D42EE42772192B00CC6336 /* Bitmap */,
 			);
 			path = DeviceDetails;
+			sourceTree = "<group>";
+		};
+		D9602A09277387B0008265D0 /* Rainbow */ = {
+			isa = PBXGroup;
+			children = (
+				D9602A0A277387E1008265D0 /* RainbowViewController.swift */,
+			);
+			path = Rainbow;
 			sourceTree = "<group>";
 		};
 		D97D50872770A21C003D677A /* Request */ = {
@@ -169,8 +188,25 @@
 			isa = PBXGroup;
 			children = (
 				D97EECE2272B6DE0008DA06A /* DeviceCell.swift.swift */,
+				D9EBF3202895BB6500FAD747 /* MainTableViewCell.swift */,
 			);
 			path = Subviews;
+			sourceTree = "<group>";
+		};
+		D98BF9EC28AB1D1D001D5335 /* Theme */ = {
+			isa = PBXGroup;
+			children = (
+				D98BF9ED28AB1D2D001D5335 /* Theme.swift */,
+			);
+			path = Theme;
+			sourceTree = "<group>";
+		};
+		D98BF9EF28AB25EF001D5335 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				D98BF9F028AB2664001D5335 /* ComicSansMS.ttf */,
+			);
+			path = Fonts;
 			sourceTree = "<group>";
 		};
 		D998F90C2730A00F000EA384 /* Subviews */ = {
@@ -185,10 +221,11 @@
 		D998F90D2730A01C000EA384 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				D98BF9EF28AB25EF001D5335 /* Fonts */,
+				D98BF9EC28AB1D1D001D5335 /* Theme */,
 				D9D42EDF2772176900CC6336 /* Views */,
 				D998F916273416E3000EA384 /* Extensions */,
 				D998F9132731588F000EA384 /* Protocols */,
-				D998F90E2730A054000EA384 /* Button.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -255,6 +292,7 @@
 		D9EF309F2683BF94009761A9 /* LightsOut */ = {
 			isa = PBXGroup;
 			children = (
+				D9EBF31F2895BA6C00FAD747 /* LightsOut.entitlements */,
 				D998F90D2730A01C000EA384 /* Common */,
 				D97EECDE272B6B48008DA06A /* Models */,
 				D91B39BB272AAD28007ED8B0 /* Scenes */,
@@ -338,6 +376,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D98BF9F128AB2664001D5335 /* ComicSansMS.ttf in Resources */,
 				D9EF30AD2683BF95009761A9 /* LaunchScreen.storyboard in Resources */,
 				D9EF30AA2683BF95009761A9 /* Assets.xcassets in Resources */,
 			);
@@ -351,6 +390,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0ABB5740269FA0A300C957DE /* GCDAsyncSocket.m in Sources */,
+				D98BF9EE28AB1D2D001D5335 /* Theme.swift in Sources */,
 				D97D50892770A22D003D677A /* ColorRequest.swift in Sources */,
 				D9EF30A52683BF94009761A9 /* MainViewController.swift in Sources */,
 				D9EF30A12683BF94009761A9 /* AppDelegate.swift in Sources */,
@@ -365,10 +405,11 @@
 				D97D508B2770A2E9003D677A /* RainbowRequest.swift in Sources */,
 				D998F915273158A1000EA384 /* Reusable.swift in Sources */,
 				D9EF30B52683CD56009761A9 /* DeviceDetailsViewController.swift in Sources */,
-				D998F90F2730A054000EA384 /* Button.swift in Sources */,
+				D9EBF3212895BB6500FAD747 /* MainTableViewCell.swift in Sources */,
 				D915664B2739846000E88EC4 /* DeviceResponse.swift in Sources */,
 				D9D42EE62772193600CC6336 /* BitmapViewController.swift in Sources */,
 				D998F91227315792000EA384 /* DeviceCollectionViewCell.swift in Sources */,
+				D9602A0B277387E1008265D0 /* RainbowViewController.swift in Sources */,
 				D998F91A2734171E000EA384 /* UIColor+Extensions.swift in Sources */,
 				D9CE4D9E2771E37E009C57B8 /* DeviceDetailsHeaderView.swift in Sources */,
 				D9C7C53D2770AA4B0064D9BD /* FireRequest.swift in Sources */,
@@ -377,6 +418,7 @@
 				D9D42EE12772177600CC6336 /* SemiModalPresentationController.swift in Sources */,
 				D97EECDD272B581C008DA06A /* StoreService.swift in Sources */,
 				D97EECE0272B6B5B008DA06A /* Device.swift in Sources */,
+				D98BF9F328AC5C4F001D5335 /* DeviceService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -516,6 +558,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = LightsOut/LightsOut.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = H9FL6Z93F8;
 				INFOPLIST_FILE = LightsOut/Info.plist;
@@ -526,6 +569,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.l33t.LightsOut;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "LightsOut/LightsOut-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -539,6 +583,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = LightsOut/LightsOut.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = H9FL6Z93F8;
 				INFOPLIST_FILE = LightsOut/Info.plist;
@@ -549,6 +594,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.l33t.LightsOut;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "LightsOut/LightsOut-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

@@ -17,7 +17,7 @@ protocol BonjourServerDelegate: AnyObject {
   func disconnected()
   func handleBody(_ body: NSString?)
   func didChangeServices()
-  func didResolveAddress(device: Device)
+  func didResolveAddress(name: String, address: String)
 }
 
 extension BonjourServerDelegate {
@@ -25,7 +25,7 @@ extension BonjourServerDelegate {
   func disconnected() {}
   func handleBody(_ body: NSString?) {}
   func didChangeServices() {}
-  func didResolveAddress(device: Device) {}
+  func didResolveAddress(name: String, address: String) {}
 }
 
 class BonjourServer: NSObject, NetServiceBrowserDelegate, NetServiceDelegate, GCDAsyncSocketDelegate {
@@ -126,7 +126,7 @@ class BonjourServer: NSObject, NetServiceBrowserDelegate, NetServiceDelegate, GC
     var address: String = ""
     if let addresses = sender.addresses, !addresses.isEmpty {
       address = String(decoding: addresses[0], as: UTF8.self)
-      print("did resolve address \(sender.name)", sender.addresses?.count ?? 0, address)
+//      print("did resolve address \(sender.name)", sender.addresses?.count ?? 0, address)
     }
     var hostname = [CChar] (repeating: 0, count: Int (NI_MAXHOST))
     guard let data = sender.addresses?.first else {return}
@@ -135,8 +135,7 @@ class BonjourServer: NSObject, NetServiceBrowserDelegate, NetServiceDelegate, GC
         guard getnameinfo (pointer, socklen_t (data.count),&hostname, socklen_t (hostname.count), nil, 0, NI_NUMERICHOST) == 0
         else { throw NSError (domain: "error_domain", code: 0, userInfo: .none) }
         let address = String (cString: hostname)
-        let device = Device(name: sender.name, address: address)
-        delegate?.didResolveAddress(device: device)
+        delegate?.didResolveAddress(name: sender.name, address: address)
       }
     } catch {
       print (error)

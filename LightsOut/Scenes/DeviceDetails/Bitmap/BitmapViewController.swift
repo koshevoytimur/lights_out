@@ -44,9 +44,11 @@ class BitmapViewController: UIViewController {
   private var indexPathForEdit: IndexPath?
 
   private let device: Device
+  private let deviceService: DeviceService
 
-  init(device: Device) {
+  init(device: Device, deviceService: DeviceService) {
     self.device = device
+    self.deviceService = deviceService
 
     super.init(nibName: nil, bundle: nil)
   }
@@ -172,7 +174,7 @@ extension BitmapViewController {
   }
 
   private func send() {
-    device.bitmap(makeBitmapRequest())
+    deviceService.bitmap(device: device, makeBitmapRequest())
   }
 
   private func load() {

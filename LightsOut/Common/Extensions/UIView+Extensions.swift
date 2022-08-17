@@ -186,5 +186,22 @@ extension UIView {
     layer.shadowOffset = shadowOffset
     layer.shadowRadius = shadowRadius
   }
+
+  func addDashedCircle(
+    strokeColor: CGColor = Theme.dark.primaryColor.cgColor,
+    fillColor: CGColor = UIColor.clear.cgColor,
+    lineWidth: CGFloat = 3.5,
+    lineDashPattern: [NSNumber]? = [6, 7, 16, 7]
+  ) {
+    let circleLayer = CAShapeLayer()
+    circleLayer.path = UIBezierPath(ovalIn: bounds).cgPath
+    circleLayer.lineWidth = lineWidth
+    circleLayer.strokeColor =  strokeColor
+    circleLayer.fillColor = fillColor
+    circleLayer.lineJoin = .round
+    circleLayer.lineDashPattern = lineDashPattern
+    circleLayer.lineCap = .round
+    layer.addSublayer(circleLayer)
+  }
 }
 

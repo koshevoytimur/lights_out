@@ -9,6 +9,10 @@ import UIKit
 import Moya
 import Combine
 
+//
+//  MARK: - this screen propably will be entirely removed
+//
+
 class DeviceDetailsViewController: UIViewController {
   private let viewModel = DeviceDetailsViewModel()
 
@@ -33,10 +37,12 @@ class DeviceDetailsViewController: UIViewController {
 
   private var cancellables: Set<AnyCancellable> = []
 
-  var device: Device
+  private let device: Device
+  private let deviceService: DeviceService
 
-  init(device: Device) {
+  init(device: Device, deviceService: DeviceService) {
     self.device = device
+    self.deviceService = deviceService
     super.init(nibName: nil, bundle: nil)
   }
 
@@ -53,33 +59,32 @@ class DeviceDetailsViewController: UIViewController {
     colorPicker.delegate = self
     setupView()
     setupBindings()
-    updateDeviceStatus()
   }
 
   private func setupBindings() {
     headerView.turnOnPublisher.sink { [weak self] _ in
-      self?.device.turnOnLastMode()
-      self?.updateDeviceStatus()
+      guard let self = self else { return }
     }.store(in: &cancellables)
     
     headerView.turnOffPublisher.sink { [weak self] _ in
-      self?.device.turnOff()
-      self?.updateDeviceStatus()
+      guard let self = self else { return }
     }.store(in: &cancellables)
 
     colorSelectedPublisher
-      .throttle(for: 0.2, scheduler: DispatchQueue.main, latest: true)
+      .throttle(for: 0.3, scheduler: DispatchQueue.main, latest: true)
       .sink { [weak self] color in
-      guard let self = self else { return }
-      self.device.color(color: color.hexString())
-      self.updateDeviceStatus()
-    }.store(in: &cancellables)
+        guard let self = self else { return }
+        self.deviceService.color(device: self.device, color: color.hexString())
+      }.store(in: &cancellables)
   }
 
   private func setupView() {
     view.backgroundColor = .systemBackground
     setupHeaderView()
     setupCollectionView()
+    guard let info = device.info else { return }
+    let mode = info.settings?.color == "000000" ? "disabled" : info.mode.title
+    self.headerView.render(props: .init(title: info.name, mode: mode, numLeds: info.numLeds))
   }
 
   private func setupHeaderView() {
@@ -101,23 +106,7 @@ class DeviceDetailsViewController: UIViewController {
     if let color = device.info?.settings?.color {
       colorPicker.selectedColor = UIColor(hexRGB: color)
     }
-    navigationController?.pushViewController(colorPicker, animated: true)
-  }
-
-  private func updateDeviceStatus() {
-    device.information { [weak self] result in
-      guard let self = self else { return }
-      switch result {
-      case .success(let info):
-        self.device.info = info
-        DispatchQueue.main.async {
-          let mode = info.settings?.color == "000000" ? "Disabled" : info.mode.title
-          self.headerView.render(props: .init(title: info.name, mode: mode, numLeds: info.numLeds))
-        }
-      case .failure(let error):
-        print(error.localizedDescription)
-      }
-    }
+    present(colorPicker, animated: true)
   }
 }
 
@@ -129,21 +118,21 @@ extension DeviceDetailsViewController: UICollectionViewDelegate {
         showPicker()
       case 1:
         // rainbow
-        device.rainbow()
+        let vc = RainbowViewController(device: device, deviceService: deviceService)
+        navigationController?.pushViewController(vc, animated: true)
       case 2:
         // fire
-        device.fire()
+        deviceService.fire(device: device)
       case 3:
         // bitmap
-        let vc = BitmapViewController(device: device)
+        let vc = BitmapViewController(device: device, deviceService: deviceService)
         navigationController?.pushViewController(vc, animated: true)
       case 4:
         // xmas
-        device.xmas()
+        deviceService.xmas(device: device)
       default:
         break
       }
-    updateDeviceStatus()
   }
 
   private func makeModeCellsProps() -> [DeviceModeCollectionViewCell.Props] {

@@ -6,17 +6,27 @@
 //
 
 import UIKit
+import Combine
 
 class MainViewController: UIViewController {
 
-  private var devices: [Device] = []
-  private lazy var server = BonjourServer()
+  private let deviceService = DeviceService()
+  private let theme: Theme = .dark
 
-  private let tableView: UITableView = {
+  private lazy var tableView: UITableView = {
     let table = UITableView(frame: .zero, style: .insetGrouped)
     table.translatesAutoresizingMaskIntoConstraints = false
+    table.register(MainTableViewCell.self)
+    table.rowHeight = 200
+    table.backgroundColor = theme.backgroundColor
+    table.separatorStyle = .none
+    table.delegate = self
+    table.dataSource = self
     return table
   }()
+  private let refreshControl = UIRefreshControl()
+
+  private var cancellable = Set<AnyCancellable>()
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -24,52 +34,81 @@ class MainViewController: UIViewController {
   }
 
   private func setup() {
-    server.delegate = self
+    setupNavBar()
     setupView()
+    setupBindings()
+  }
+
+  private func setupBindings() {
+    deviceService.deviceUpdatePublisher
+      .debounce(for: 0.25, scheduler: DispatchQueue.main)
+      .sink { [weak self] _ in
+        guard let self = self else { return }
+        self.tableView.reloadData()
+      }.store(in: &cancellable)
+  }
+
+  private func setupNavBar() {
+    navigationController?.navigationBar.titleTextAttributes = [.font: theme.font18]
+    title = "main"
   }
 
   private func setupView() {
-    title = "Main"
-    navigationItem.largeTitleDisplayMode = .automatic
-
-    tableView.delegate = self
-    tableView.dataSource = self
+    view.backgroundColor = theme.backgroundColor
     tableView.register(DeviceCell.self, forCellReuseIdentifier: DeviceCell.id)
     view.addSubview(tableView)
     NSLayoutConstraint.activate([
       tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
       tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
       tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-      tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+      tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
     ])
-    tableView.reloadData()
+    refreshControl.attributedTitle = NSAttributedString(string: "harder...", attributes: [.font: theme.font10])
+    refreshControl.addTarget(self, action: #selector(refresh(_:)), for: .valueChanged)
+    tableView.addSubview(refreshControl)
   }
-}
 
-extension MainViewController: BonjourServerDelegate {
-  func didResolveAddress(device: Device) {
-    devices.append(device)
-    tableView.reloadData()
+  @objc func refresh(_ sender: AnyObject) {
+    deviceService.refresh()
+    refreshControl.endRefreshing()
   }
 }
 
 extension MainViewController: UITableViewDelegate, UITableViewDataSource {
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return devices.count
+    return deviceService.devices.count
   }
 
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    guard let  cell = tableView.dequeueReusableCell(withIdentifier: DeviceCell.id) as? DeviceCell else {
-      return UITableViewCell()
-    }
-    cell.detailTextLabel?.text = devices[indexPath.row].name
-    cell.textLabel?.text = devices[indexPath.row].name
+    let cell = tableView.dequeueReusableCell(forItemAt: indexPath, cellType: MainTableViewCell.self)
+    guard indexPath.row < deviceService.devices.count else { fatalError("devices index out of bounds") }
+    let device = deviceService.devices[indexPath.row]
+    cell.update(device: device)
+
+    cell.switchButtonTapPublisher
+      .sink { [weak self] device in
+        guard let self = self else { return }
+        self.deviceService.handleSwitchButtonPressed(device: device)
+      }.store(in: &cancellable)
+
+    cell.emojiTextFieldReturnPublisher.sink { [weak self] emoji in
+      guard let self = self else { return }
+      self.deviceService.saveEmoji(device: device, emoji: emoji)
+    }.store(in: &cancellable)
+
     return cell
   }
 
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     tableView.deselectRow(at: indexPath, animated: true)
-    let vc = UINavigationController(rootViewController: DeviceDetailsViewController(device: devices[indexPath.row]))
-    showDetailViewController(vc, sender: self)
+    let vc = DeviceDetailsViewController(
+      device: deviceService.devices[indexPath.row],
+      deviceService: deviceService
+    )
+    navigationController?.pushViewController(vc, animated: true)
+  }
+
+  func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    return 150
   }
 }

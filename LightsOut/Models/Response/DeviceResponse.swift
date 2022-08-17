@@ -37,21 +37,48 @@ enum DeviceMode: String, Codable, Hashable, CaseIterable {
   case bitmap
   case xmas
   case ambi
+  case disabled
+  case unknown
 
   var title: String {
     switch self {
     case .color:
-      return "Color"
+      return "color"
     case .rainbow:
-      return "Rainbow"
+      return "rainbow"
     case .fire:
-      return "Fire"
+      return "fire"
     case .bitmap:
-      return "Bitmap"
+      return "bitmap"
     case .xmas:
-      return "Xmas"
+      return "xmas"
     case .ambi:
-      return "Ambilight"
+      return "ambilight"
+    case .disabled:
+      return "disabled"
+    case .unknown:
+      return "unknown"
+    }
+  }
+
+  var emoji: String {
+    switch self {
+    case .color:
+      return "🎨"
+    case .rainbow:
+      return "🌈"
+    case .fire:
+      return "🔥"
+    case .bitmap:
+      return "🚥"
+    case .xmas:
+      return "🎄"
+    case .ambi:
+      return "🖥"
+    case .disabled:
+      return "⬛️"
+    case .unknown:
+      return "❓"
     }
   }
 }

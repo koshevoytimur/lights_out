@@ -5,163 +5,47 @@
 //  Created by Essence K on 29.10.2021.
 //
 
-// MARK: - testing
-private let testColors = [[255, 0, 0], [255, 0, 0], [255, 0, 0], [255, 0, 0], [255, 0, 0], [255, 0, 0], [255, 0, 0], [255, 0, 0], [255, 0, 0], [255, 0, 0], [255, 0, 0], [255, 0, 0], [255, 0, 0], [255, 0, 0], [255, 0, 0], [255, 0, 0], [255, 0, 0], [255, 0, 0], [255, 0, 0], [255, 0, 0], [255, 0, 0], [255, 0, 0], [255, 0, 0], [255, 0, 0], [255, 0, 0], [255, 0, 0], [255, 0, 0], [255, 0, 0], [255, 0, 0], [255, 0, 0], [255, 0, 0], [255, 0, 0], [255, 0, 0], [255, 0, 0], [255, 0, 0], [255, 0, 0], [255, 0, 0], [255, 0, 0], [255, 0, 0], [255, 0, 0], [255, 0, 0], [255, 0, 0], [255, 0, 0], [255, 0, 0], [255, 0, 0], [255, 0, 0], [255, 0, 0], [255, 0, 0], [255, 0, 0], [255, 0, 0], [255, 0, 0], [255, 0, 0], [255, 0, 0]]
-
 import Foundation
 import Moya
 import Combine
 
-struct Device: Hashable, Codable {
+class Device {
   let name: String
   let address: String
-  var info: DeviceResponse?
+  var info: DeviceResponse? = .none
 
-  var lastModeKey: String {
-    return "\(name)last_mode"
+  init(
+    name: String,
+    address: String,
+    info: DeviceResponse? = .none
+  ) {
+    self.name = name
+    self.address = address
+    self.info = info
   }
 
-  var lastModeParamsKey: String {
-    return "\(name)last_mode_params"
+  public var lastModeKey: String {
+    return "\(name)last-mode"
   }
 
-  private var url: URL? {
+  public var lastModeParamsKey: String {
+    return "\(name)last-mode-params"
+  }
+
+  public var emojiKey: String {
+    return "\(name)-emoji"
+  }
+
+  public var url: URL? {
     URL(string: "http://" + address)
   }
 
-  func id() -> String {
-    name + address
+  public var emoji: String? {
+    StoreService().fetchStr(key: emojiKey)
   }
 
-  func color(color: String, saveAsLast: Bool = true) {
-    guard let url = self.url else { return }
-    let provider = MoyaProvider<DeviceNetwork>()
-    let params = ColorRequest(color: color)
-    if saveAsLast {
-      saveMode(mode: .color, params: params)
-    }
-    provider.request(.color(params, url)) { result in
-      switch result {
-      case .success(let response):
-        print(response)
-      case .failure(let error):
-        print(error.errorDescription ?? "Unknown error")
-      }
-    }
+  // TODO: - make disabled mode directly in the device's firmware and stop using this workaround.... sometime
+  public var isOn: Bool {
+    (info?.mode != .disabled && info?.settings?.color != "000000") || info?.mode == .disabled
   }
-
-  func rainbow(_ params: RainbowRequest = RainbowRequest()) {
-    guard let url = self.url else { return }
-    let provider = MoyaProvider<DeviceNetwork>()
-    saveMode(mode: .rainbow, params: params)
-    provider.request(.rainbow(params, url)) { result in
-      switch result {
-      case .success(let response):
-        print(response)
-      case .failure(let error):
-        print(error.errorDescription ?? "Unknown error")
-      }
-    }
-  }
-
-  func fire(_ params: FireRequest = FireRequest()) {
-    guard let url = self.url else { return }
-    let provider = MoyaProvider<DeviceNetwork>()
-    saveMode(mode: .fire, params: params)
-    provider.request(.fire(params, url)) { result in
-      switch result {
-      case .success(let response):
-        print(response)
-      case .failure(let error):
-        print(error.errorDescription ?? "Unknown error")
-      }
-    }
-  }
-
-  func xmas() {
-    guard let url = self.url else { return }
-    let provider = MoyaProvider<DeviceNetwork>()
-    saveMode(mode: .xmas)
-    provider.request(.xmas(url)) { result in
-      switch result {
-      case .success(let response):
-        print(response)
-      case .failure(let error):
-        print(error.errorDescription ?? "Unknown error")
-      }
-    }
-  }
-
-  func bitmap(_ params: BitmapRequest) {
-    guard let url = self.url else { return }
-    let provider = MoyaProvider<DeviceNetwork>()
-    saveMode(mode: .bitmap, params: params)
-    provider.request(.bitmap(params, url)) { result in
-      switch result {
-      case .success(let response):
-        print(response)
-      case .failure(let error):
-        print(error.errorDescription ?? "Unknown error")
-      }
-    }
-  }
-
-  func information(completion: @escaping (Result<DeviceResponse, Error>) -> Void) {
-    guard let url = self.url else { return }
-    let provider = MoyaProvider<DeviceNetwork>()
-    provider.request(.info(url)) { result in
-      switch result {
-      case .success(let response):
-        guard let info = try? response.map(DeviceResponse.self) else { return }
-        completion(.success(info))
-      case .failure(let error):
-        completion(.failure(error))
-      }
-    }
-  }
-
-  func turnOff() {
-    color(color: "000000", saveAsLast: false)
-  }
-
-  private func saveMode(mode: DeviceMode) {
-    let store = StoreService()
-    store.saveStr(mode.rawValue, key: lastModeKey)
-  }
-
-  private func saveMode<T: Encodable>(mode: DeviceMode, params: T? = nil) {
-    let store = StoreService()
-    store.saveStr(mode.rawValue, key: lastModeKey)
-    store.save(params, key: lastModeParamsKey)
-  }
-
-  func turnOnLastMode() {
-    let store = StoreService()
-    guard let modeStr = store.fetchStr(key: lastModeKey),
-          let mode = DeviceMode(rawValue: modeStr)
-    else { return }
-
-    switch mode {
-    case .color:
-      guard let params = store.fetch(ColorRequest.self, key: lastModeParamsKey) else { return }
-      color(color: params.color)
-    case .rainbow:
-      guard let params = store.fetch(RainbowRequest.self, key: lastModeParamsKey) else { return }
-      rainbow(params)
-    case .fire:
-      guard let params = store.fetch(FireRequest.self, key: lastModeParamsKey) else { return }
-      fire(params)
-    case .bitmap:
-      guard let params = store.fetch(BitmapRequest.self, key: lastModeParamsKey) else { return }
-      bitmap(params)
-    case .xmas:
-      xmas()
-    case .ambi:
-      return
-    }
-  }
-}
-
-extension Device {
-
 }
