@@ -51,6 +51,20 @@ class MainViewController: UIViewController {
   private func setupNavBar() {
     navigationController?.navigationBar.titleTextAttributes = [.font: theme.font18]
     title = "main"
+
+    let mock = UIBarButtonItem(
+      title: "mock", style: .plain, target: self, action: #selector(toogleMock)
+    )
+    mock.tintColor = theme.primaryColor
+    mock.setTitleTextAttributes([.font: theme.font14], for: .normal)
+    navigationItem.leftBarButtonItems = [mock]
+
+    let blackout = UIBarButtonItem(
+      title: "blackout", style: .plain, target: self, action: #selector(blackout)
+    )
+    blackout.tintColor = theme.primaryColor
+    blackout.setTitleTextAttributes([.font: theme.font14], for: .normal)
+    navigationItem.rightBarButtonItems = [blackout]
   }
 
   private func setupView() {
@@ -67,10 +81,21 @@ class MainViewController: UIViewController {
     refreshControl.addTarget(self, action: #selector(refresh(_:)), for: .valueChanged)
     tableView.addSubview(refreshControl)
   }
+}
 
+// MARK: - actions
+extension MainViewController {
   @objc func refresh(_ sender: AnyObject) {
     deviceService.refresh()
     refreshControl.endRefreshing()
+  }
+
+  @objc private func toogleMock() {
+    deviceService.toggleMock()
+  }
+
+  @objc private func blackout() {
+    deviceService.turnOffAll()
   }
 }
 

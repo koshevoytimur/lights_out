@@ -11,12 +11,15 @@ import Moya
 
 class DeviceService {
   public lazy var deviceUpdatePublisher = deviceUpdateSubject.eraseToAnyPublisher()
-  private let deviceUpdateSubject = PassthroughSubject<Device, Never>()
+  private let deviceUpdateSubject = PassthroughSubject<Device?, Never>()
 
   // MARK: - private properties
   private let server = BonjourServer()
   private let provider = MoyaProvider<DeviceNetwork>()
   private let store = StoreService()
+
+  // needs for developing away from rgb stripes 🥲
+  private var mocked: Bool = false
 
   // MARK: - devices
   private(set) var devices: [Device] = []
@@ -109,8 +112,18 @@ class DeviceService {
     }
   }
 
+  func turnOffAll() {
+    devices
+      .filter({ $0.isOn })
+      .forEach({ turnOff(device: $0) })
+  }
+
   func saveEmoji(device: Device, emoji: String) {
     store.saveStr(emoji, key: device.emojiKey)
+  }
+
+  func toggleMock() {
+    mocked ? setLive() : setMocked()
   }
 }
 
@@ -199,6 +212,19 @@ extension DeviceService {
   private func fetchEmoji(device: Device) -> String? {
     return store.fetchStr(key: device.emojiKey)
   }
+
+  private func setMocked() {
+    mocked = true
+    devices = Mock.devices
+    deviceUpdateSubject.send(nil)
+  }
+
+  private func setLive() {
+    mocked = false
+    devices = []
+    refresh()
+    deviceUpdateSubject.send(nil)
+  }
 }
 
 // MARK: - bonjorno delegate
@@ -209,51 +235,43 @@ extension DeviceService: BonjourServerDelegate {
   }
 }
 
-
-
-
-
-
-
-
-
-// MOCKS
-
-//  private var devices: [Device] = [
-//    Device(
-//      name: "test",
-//      address: "1321321312",
-//      info: .init(
-//        name: "test",
-//        numLeds: 228,
-//        mode: .rainbow,
-//        type: .ledStrip,
-//        settings: .init(
-//          color: "0000AA",
-//          speed: 1.0,
-//          brightness: 255,
-//          minBrightness: 50,
-//          maxBrightness: 255,
-//          msPerFrame: 255
-//        )
-//      )
-//    ),
-//    Device(
-//      name: "test2",
-//      address: "1337",
-//      info: .init(
-//        name: "test",
-//        numLeds: 228,
-//        mode: .rainbow,
-//        type: .ledStrip,
-//        settings: .init(
-//          color: "00BB00",
-//          speed: 1.0,
-//          brightness: 255,
-//          minBrightness: 50,
-//          maxBrightness: 255,
-//          msPerFrame: 255
-//        )
-//      )
-//    )
-//  ]
+enum Mock {
+  static var devices: [Device] = [
+    Device(
+      name: "office-table",
+      address: "1321321312",
+      info: .init(
+        name: "office-table",
+        numLeds: 228,
+        mode: .fire,
+        type: .ledStrip,
+        settings: .init(
+          color: "0000AA",
+          speed: 1.0,
+          brightness: 255,
+          minBrightness: 50,
+          maxBrightness: 255,
+          msPerFrame: 255
+        )
+      )
+    ),
+    Device(
+      name: "kitchen-lights",
+      address: "1337",
+      info: .init(
+        name: "test",
+        numLeds: 228,
+        mode: .rainbow,
+        type: .ledStrip,
+        settings: .init(
+          color: "00BB00",
+          speed: 1.0,
+          brightness: 255,
+          minBrightness: 50,
+          maxBrightness: 255,
+          msPerFrame: 255
+        )
+      )
+    )
+  ]
+}
