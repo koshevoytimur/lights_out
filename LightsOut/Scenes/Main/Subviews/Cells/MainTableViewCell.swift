@@ -10,15 +10,9 @@ import Combine
 
 class MainTableViewCell: UITableViewCell, ReusableCell {
 
-  // MARK: - Public properties
-  public lazy var switchButtonTapPublisher = switchButtonTapSubject.eraseToAnyPublisher()
-  private let switchButtonTapSubject = PassthroughSubject<Device, Never>()
-
-  public lazy var emojiTextFieldReturnPublisher = emojiTextFieldReturnSubject.eraseToAnyPublisher()
-  private let emojiTextFieldReturnSubject = PassthroughSubject<String, Never>()
-
   // TODO: - make this crap not hardcoded sometime
   private let theme: Theme = .dark
+
   private var device: Device? = nil
 
   private let padding: CGFloat = 8
@@ -41,13 +35,13 @@ class MainTableViewCell: UITableViewCell, ReusableCell {
     view.backgroundColor = .clear
     return view
   }()
-  private lazy var emojiTextField: UITextField = {
-    let label = UITextField()
-    label.textAlignment = .center
-    label.font = .systemFont(ofSize: 30)
-    label.adjustsFontSizeToFitWidth = true
-    label.textColor = theme.primaryTextColor
-    return label
+  private(set) lazy var emojiTextField: UITextField = {
+    let text = UITextField()
+    text.textAlignment = .center
+    text.font = .systemFont(ofSize: 30)
+    text.adjustsFontSizeToFitWidth = true
+    text.textColor = theme.primaryTextColor
+    return text
   }()
   private lazy var titleLabel: UILabel = {
     let label = UILabel()
@@ -67,25 +61,50 @@ class MainTableViewCell: UITableViewCell, ReusableCell {
     label.textColor = theme.primaryTextColor
     return label
   }()
-  private lazy var switchButton: UIButton = {
-    let button = UIButton()
-    button.translatesAutoresizingMaskIntoConstraints = false
-    button.setImage(UIImage(named: "switch-on"), for: .normal)
-    return button
+  private(set) lazy var switchView: SwitchView = {
+    let switchView = SwitchView(size: .init(width: padding * 3, height: padding * 6))
+    switchView.translatesAutoresizingMaskIntoConstraints = false
+    return switchView
   }()
+  private lazy var shortcutsContentView: UIView = {
+    let view = UIView()
+    view.backgroundColor = .clear
+    view.rounded(shortcutsCornerRadius)
+    return view
+  }()
+  private let shortcutsCornerRadius: CGFloat = 15
 
-  private var cancellable = Set<AnyCancellable>()
+  var cancellables = Set<AnyCancellable>()
 
   override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
     super.init(style: style, reuseIdentifier: reuseIdentifier)
-    setupView()
-    setupBindings()
+    setup()
+  }
+
+  override func prepareForReuse() {
+    super.prepareForReuse()
+    device = nil
+    titleLabel.text = ""
+    emojiTextField.text = ""
+    modeLabel.text = ""
+    cancellables.removeAll()
   }
 
   override func layoutSubviews() {
     super.layoutSubviews()
-    dashContentView.addDashedCircle()
+    dashContentView.addDashedBorder(cornerRadius: padding * 4)
+    let space = NSNumber(value: Float((shortcutsContentView.frame.width * 0.3) / 16))
+    let dash = NSNumber(value: Float((shortcutsContentView.frame.width * 0.6) / 16))
+    shortcutsContentView.addDashedBorder(
+      strokeColor: theme.secondaryColor.cgColor,
+      lineDashPattern: [space, dash],
+      cornerRadius: shortcutsCornerRadius
+    )
     contentView.bringSubviewToFront(modeLabel)
+  }
+
+  private func setup() {
+    setupView()
   }
 
   private func setupView() {
@@ -94,26 +113,10 @@ class MainTableViewCell: UITableViewCell, ReusableCell {
     setupCircleView()
     setupDashedContentView()
     setupEmojiView()
+    setupSwitchView()
     setupTitleLabel()
     setupModeLabel()
-    setupSwitchButton()
-  }
-
-  private func setupBindings() {
-    switchButton.tapPublisher.sink { [weak self] _ in
-      guard let self = self, let device = self.device else { return }
-      self.switchButtonTapSubject.send(device)
-      let generator = UIImpactFeedbackGenerator(style: self.device?.isOn ?? true ? .light : .medium)
-      generator.impactOccurred()
-    }.store(in: &cancellable)
-
-    emojiTextField.returnPublisher.sink { [weak self] _ in
-      guard let self = self else { return }
-      self.emojiTextFieldReturnSubject.send(self.emojiTextField.text ?? "")
-      self.emojiTextField.endEditing(true)
-      let generator = UINotificationFeedbackGenerator()
-      generator.notificationOccurred(.success)
-    }.store(in: &cancellable)
+    setupShortcutContentView()
   }
 
   private func setupCardView() {
@@ -164,14 +167,26 @@ class MainTableViewCell: UITableViewCell, ReusableCell {
     )
   }
 
+  private func setupSwitchView() {
+    cardView.addSubview(
+      switchView,
+      constraints: [
+        switchView.heightAnchor.constraint(equalToConstant: padding * 6),
+        switchView.widthAnchor.constraint(equalToConstant: padding * 3),
+        switchView.topAnchor.constraint(equalTo: cardView.topAnchor, constant: padding),
+        switchView.trailingAnchor.constraint(equalTo: cardView.trailingAnchor, constant: -padding * 2)
+      ]
+    )
+  }
+
   private func setupTitleLabel() {
     cardView.addSubview(
       titleLabel,
       constraints: [
         titleLabel.heightAnchor.constraint(equalToConstant: padding * 4),
-        titleLabel.leadingAnchor.constraint(equalTo: cardView.leadingAnchor, constant: padding * 7),
-        titleLabel.topAnchor.constraint(equalTo: cardView.topAnchor, constant: padding * 1.5),
-        titleLabel.trailingAnchor.constraint(equalTo: cardView.trailingAnchor, constant: -padding * 2)
+        titleLabel.leadingAnchor.constraint(equalTo: cardView.leadingAnchor, constant: padding * 6.5),
+        titleLabel.topAnchor.constraint(equalTo: cardView.topAnchor, constant: padding * 0.75),
+        titleLabel.trailingAnchor.constraint(equalTo: switchView.leadingAnchor, constant: padding)
       ]
     )
   }
@@ -188,45 +203,31 @@ class MainTableViewCell: UITableViewCell, ReusableCell {
     )
   }
 
-  private func setupDescriptionLabel() {
+  private func setupShortcutContentView() {
     cardView.addSubview(
-      modeLabel,
+      shortcutsContentView,
       constraints: [
-        modeLabel.heightAnchor.constraint(equalToConstant: padding * 3),
-        modeLabel.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
-        modeLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor),
-        modeLabel.trailingAnchor.constraint(equalTo: titleLabel.trailingAnchor)
+        shortcutsContentView.topAnchor.constraint(equalTo: modeLabel.bottomAnchor, constant: padding),
+        shortcutsContentView.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
+        shortcutsContentView.trailingAnchor.constraint(equalTo: cardView.trailingAnchor, constant: -padding * 2),
+        shortcutsContentView.bottomAnchor.constraint(equalTo: cardView.bottomAnchor, constant: -padding * 2)
       ]
     )
-  }
-
-  private func setupSwitchButton() {
-    cardView.addSubview(
-      switchButton,
-      constraints: [
-        switchButton.heightAnchor.constraint(equalToConstant: padding * 4),
-        switchButton.widthAnchor.constraint(equalToConstant: padding * 4),
-        switchButton.trailingAnchor.constraint(equalTo: cardView.trailingAnchor, constant: -padding * 2),
-        switchButton.bottomAnchor.constraint(equalTo: cardView.bottomAnchor, constant: -padding * 2)
-      ]
-    )
-  }
-
-  private func setButtonImage(isOn: Bool) {
-    let imageName = isOn ? "switch-on" : "switch-off"
-    switchButton.setImage(UIImage(named: imageName), for: .normal)
-  }
-
-  public func update(device: Device) {
-    self.device = device
-    titleLabel.text = device.name
-    emojiTextField.text = device.emoji ?? "🍉"
-    modeLabel.text = device.isOn ? "\(device.info?.mode.title ?? "") \(device.info?.mode.emoji ?? "")" : "--------"
-    setButtonImage(isOn: device.isOn)
   }
 
   @available(*, unavailable)
   required init?(coder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
+  }
+}
+
+// MARK: - public function
+extension MainTableViewCell {
+  public func update(device: Device) {
+    self.device = device
+    titleLabel.text = device.name
+    emojiTextField.text = device.emoji ?? "🍉"
+    modeLabel.text = device.isOn ? "\(device.info?.mode.title ?? "") \(device.info?.mode.emoji ?? "")" : "disabled"
+    switchView.setIsOn(isOn: device.isOn)
   }
 }

@@ -40,11 +40,21 @@ class MainViewController: UIViewController {
   }
 
   private func setupBindings() {
-    deviceService.deviceUpdatePublisher
+    deviceService.deviceFoundPublisher
       .debounce(for: 0.25, scheduler: DispatchQueue.main)
-      .sink { [weak self] _ in
+      .sink { [weak self] device in
         guard let self = self else { return }
         self.tableView.reloadData()
+      }.store(in: &cancellable)
+    deviceService.deviceUpdatePublisher
+      .debounce(for: 0.25, scheduler: DispatchQueue.main)
+      .sink { [weak self] device in
+        guard let self = self,
+              let index = self.deviceService.devices.firstIndex(where: { $0.name == device?.name })
+        else { return }
+        self.tableView.beginUpdates()
+        self.tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .none)
+        self.tableView.endUpdates()
       }.store(in: &cancellable)
   }
 
@@ -68,8 +78,11 @@ class MainViewController: UIViewController {
   }
 
   private func setupView() {
+    setupTableView()
+  }
+
+  private func setupTableView() {
     view.backgroundColor = theme.backgroundColor
-    tableView.register(DeviceCell.self, forCellReuseIdentifier: DeviceCell.id)
     view.addSubview(tableView)
     NSLayoutConstraint.activate([
       tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
@@ -81,20 +94,38 @@ class MainViewController: UIViewController {
     refreshControl.addTarget(self, action: #selector(refresh(_:)), for: .valueChanged)
     tableView.addSubview(refreshControl)
   }
+
+  private func handleSelectedMode(device: Device, mode: DeviceMode) {
+    switch mode {
+    case .color:
+      break
+    case .rainbow:
+      deviceService.rainbow(device: device)
+    case .fire:
+      deviceService.fire(device: device)
+    case .bitmap:
+      break
+    case .xmas:
+      deviceService.xmas(device: device)
+    default:
+      break
+    }
+  }
 }
 
 // MARK: - actions
+@objc
 extension MainViewController {
-  @objc func refresh(_ sender: AnyObject) {
+  func refresh(_ sender: AnyObject) {
     deviceService.refresh()
     refreshControl.endRefreshing()
   }
 
-  @objc private func toogleMock() {
+  private func toogleMock() {
     deviceService.toggleMock()
   }
 
-  @objc private func blackout() {
+  private func blackout() {
     deviceService.turnOffAll()
   }
 }
@@ -110,27 +141,27 @@ extension MainViewController: UITableViewDelegate, UITableViewDataSource {
     let device = deviceService.devices[indexPath.row]
     cell.update(device: device)
 
-    cell.switchButtonTapPublisher
-      .sink { [weak self] device in
-        guard let self = self else { return }
-        self.deviceService.handleSwitchButtonPressed(device: device)
-      }.store(in: &cancellable)
+    cell.switchView.isOnPublisher.compactMap{ $0 }.sink { [weak self] _ in
+      self?.deviceService.handleSwitchButtonPressed(device: device)
+    }.store(in: &cell.cancellables)
 
-    cell.emojiTextFieldReturnPublisher.sink { [weak self] emoji in
-      guard let self = self else { return }
-      self.deviceService.saveEmoji(device: device, emoji: emoji)
-    }.store(in: &cancellable)
+    cell.emojiTextField.returnPublisher.compactMap{ $0 }.sink { [weak self] _ in
+      self?.deviceService.saveEmoji(device: device, emoji: cell.emojiTextField.text ?? "🍉")
+    }.store(in: &cell.cancellables)
 
     return cell
   }
 
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-    tableView.deselectRow(at: indexPath, animated: true)
-    let vc = DeviceDetailsViewController(
-      device: deviceService.devices[indexPath.row],
-      deviceService: deviceService
-    )
-    navigationController?.pushViewController(vc, animated: true)
+    guard indexPath.row < deviceService.devices.count else { return }
+    let device = deviceService.devices[indexPath.row]
+    let controller = ModeViewController(device: device, deviceService: deviceService)
+    let modal = SemiModalViewController { controller }
+    controller.modeSeleted.sink { [weak self] mode in
+      self?.handleSelectedMode(device: device, mode: mode)
+      self?.dismiss(animated: true)
+    }.store(in: &cancellable)
+    present(modal, animated: true)
   }
 
   func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

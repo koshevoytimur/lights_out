@@ -10,6 +10,9 @@ import Combine
 import Moya
 
 class DeviceService {
+  public lazy var deviceFoundPublisher = deviceFoundSubject.eraseToAnyPublisher()
+  private let deviceFoundSubject = PassthroughSubject<Device, Never>()
+
   public lazy var deviceUpdatePublisher = deviceUpdateSubject.eraseToAnyPublisher()
   private let deviceUpdateSubject = PassthroughSubject<Device?, Never>()
 
@@ -36,15 +39,15 @@ class DeviceService {
     device.isOn ? turnOff(device: device) : turnOnLastMode(device: device)
   }
 
+  // TODO: - refefactor this fucking identical methods
   func color(device: Device, color: String) {
     guard let url = device.url else { return }
-    let provider = MoyaProvider<DeviceNetwork>()
     let params = ColorRequest(color: color)
     if color != "000000" { saveMode(device: device, mode: .color, params: params) }
     provider.request(.color(params, url)) { [weak self] result in
-      self?.refreshDeviceInfo(device)
       switch result {
       case .success(let response):
+        self?.refreshDeviceInfo(device)
         print(response)
       case .failure(let error):
         print("🚫 ERROR:\n", error)
@@ -54,12 +57,11 @@ class DeviceService {
 
   func rainbow(device: Device, _ params: RainbowRequest = RainbowRequest()) {
     guard let url = device.url else { return }
-    let provider = MoyaProvider<DeviceNetwork>()
     saveMode(device: device, mode: .rainbow, params: params)
     provider.request(.rainbow(params, url)) { [weak self] result in
-      self?.refreshDeviceInfo(device)
       switch result {
       case .success(let response):
+        self?.refreshDeviceInfo(device)
         print(response)
       case .failure(let error):
         print("🚫 ERROR:\n", error)
@@ -69,12 +71,11 @@ class DeviceService {
 
   func fire(device: Device, _ params: FireRequest = FireRequest()) {
     guard let url = device.url else { return }
-    let provider = MoyaProvider<DeviceNetwork>()
     saveMode(device: device, mode: .fire, params: params)
     provider.request(.fire(params, url)) { [weak self] result in
-      self?.refreshDeviceInfo(device)
       switch result {
       case .success(let response):
+        self?.refreshDeviceInfo(device)
         print(response)
       case .failure(let error):
         print("🚫 ERROR:\n", error)
@@ -84,12 +85,11 @@ class DeviceService {
 
   func bitmap(device: Device, _ params: BitmapRequest) {
     guard let url = device.url else { return }
-    let provider = MoyaProvider<DeviceNetwork>()
     saveMode(device: device, mode: .bitmap, params: params)
     provider.request(.bitmap(params, url)) { [weak self] result in
-      self?.refreshDeviceInfo(device)
       switch result {
       case .success(let response):
+        self?.refreshDeviceInfo(device)
         print(response)
       case .failure(let error):
         print("🚫 ERROR:\n", error)
@@ -99,12 +99,11 @@ class DeviceService {
 
   func xmas(device: Device) {
     guard let url = URL(string: "http://" + device.address) else { return }
-    let provider = MoyaProvider<DeviceNetwork>()
     saveAsLastMode(device: device, mode: .xmas)
     provider.request(.xmas(url)) { [weak self] result in
-      self?.refreshDeviceInfo(device)
       switch result {
       case .success(let response):
+        self?.refreshDeviceInfo(device)
         print(response)
       case .failure(let error):
         print("🚫 ERROR:\n", error)
@@ -141,11 +140,11 @@ extension DeviceService {
         guard let info = try? response.map(DeviceResponse.self) else { return }
         let device = Device(name: name, address: address, info: info)
         self.devices.append(device)
-        self.deviceUpdateSubject.send(device)
+        self.deviceFoundSubject.send(device)
       case .failure(let error):
         let device = Device(name: name, address: address)
         self.devices.append(device)
-        self.deviceUpdateSubject.send(device)
+        self.deviceFoundSubject.send(device)
         print("🚫 ERROR:\n", error)
         print("📇 ADRESS:\n", address)
       }
@@ -233,45 +232,4 @@ extension DeviceService: BonjourServerDelegate {
     print("🥶", name)
     appendDevice(name: name, address: address)
   }
-}
-
-enum Mock {
-  static var devices: [Device] = [
-    Device(
-      name: "office-table",
-      address: "1321321312",
-      info: .init(
-        name: "office-table",
-        numLeds: 228,
-        mode: .fire,
-        type: .ledStrip,
-        settings: .init(
-          color: "0000AA",
-          speed: 1.0,
-          brightness: 255,
-          minBrightness: 50,
-          maxBrightness: 255,
-          msPerFrame: 255
-        )
-      )
-    ),
-    Device(
-      name: "kitchen-lights",
-      address: "1337",
-      info: .init(
-        name: "test",
-        numLeds: 228,
-        mode: .rainbow,
-        type: .ledStrip,
-        settings: .init(
-          color: "00BB00",
-          speed: 1.0,
-          brightness: 255,
-          minBrightness: 50,
-          maxBrightness: 255,
-          msPerFrame: 255
-        )
-      )
-    )
-  ]
 }

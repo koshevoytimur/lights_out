@@ -10,7 +10,7 @@ import Moya
 import Combine
 
 class Device {
-  let name: String
+  var name: String
   let address: String
   var info: DeviceResponse? = .none
 
@@ -24,28 +24,20 @@ class Device {
     self.info = info
   }
 
-  public var lastModeKey: String {
-    return "\(name)last-mode"
-  }
+  var lastModeKey: String { "\(name)last-mode" }
 
-  public var lastModeParamsKey: String {
-    return "\(name)last-mode-params"
-  }
+  var lastModeParamsKey: String { "\(name)last-mode-params" }
 
-  public var emojiKey: String {
-    return "\(name)-emoji"
-  }
+  var emojiKey: String { "\(name)-emoji" }
 
-  public var url: URL? {
-    URL(string: "http://" + address)
-  }
+  var url: URL? { URL(string: "http://" + address) }
 
-  public var emoji: String? {
-    StoreService().fetchStr(key: emojiKey)
-  }
+  var emoji: String? { StoreService().fetchStr(key: emojiKey) }
 
   // TODO: - make disabled mode directly in the device's firmware and stop using this workaround.... sometime
-  public var isOn: Bool {
-    (info?.mode != .disabled && info?.settings?.color != "000000") || info?.mode == .disabled
+  var isOn: Bool {
+    let isBlack = info?.mode != .disabled && info?.settings?.color != "000000"
+    let isDisabled = info?.mode == .disabled
+    return isBlack || isDisabled
   }
 }

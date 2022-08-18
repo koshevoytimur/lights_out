@@ -16,7 +16,7 @@ extension Theme {
   var primaryColor: UIColor {
     switch self {
     case .dark:
-      return UIColor(red: 22.0/255.0, green: 22.0/255.0, blue: 22.0/255.0, alpha: 1.0)
+      return UIColor(red: 24.0/255.0, green: 24.0/255.0, blue: 24.0/255.0, alpha: 1.0)
     }
   }
 

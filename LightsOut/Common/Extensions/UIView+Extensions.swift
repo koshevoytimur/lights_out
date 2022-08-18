@@ -187,14 +187,15 @@ extension UIView {
     layer.shadowRadius = shadowRadius
   }
 
-  func addDashedCircle(
+  func addDashedBorder(
     strokeColor: CGColor = Theme.dark.primaryColor.cgColor,
     fillColor: CGColor = UIColor.clear.cgColor,
     lineWidth: CGFloat = 3.5,
-    lineDashPattern: [NSNumber]? = [6, 7, 16, 7]
+    lineDashPattern: [NSNumber]? = [6, 7, 16, 7],
+    cornerRadius: CGFloat = 0
   ) {
     let circleLayer = CAShapeLayer()
-    circleLayer.path = UIBezierPath(ovalIn: bounds).cgPath
+    circleLayer.path = UIBezierPath(roundedRect: bounds, cornerRadius: cornerRadius).cgPath
     circleLayer.lineWidth = lineWidth
     circleLayer.strokeColor =  strokeColor
     circleLayer.fillColor = fillColor
@@ -205,3 +206,11 @@ extension UIView {
   }
 }
 
+extension UITextField {
+  func textPublisher() -> AnyPublisher<String, Never> {
+      NotificationCenter.default
+          .publisher(for: UITextField.textDidChangeNotification, object: self)
+          .map { ($0.object as? UITextField)?.text  ?? "" }
+          .eraseToAnyPublisher()
+  }
+}
