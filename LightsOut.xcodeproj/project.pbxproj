@@ -38,7 +38,6 @@
 		D9EF30AD2683BF95009761A9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D9EF30AB2683BF95009761A9 /* LaunchScreen.storyboard */; };
 		D9F9ACA028AD7641006AC693 /* ModeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9F9AC9F28AD7641006AC693 /* ModeCollectionViewCell.swift */; };
 		D9F9ACA328ADA5A7006AC693 /* SwitchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9F9ACA228ADA5A7006AC693 /* SwitchView.swift */; };
-		D9F9ACA528ADE1F5006AC693 /* LightsOut in Resources */ = {isa = PBXBuildFile; fileRef = D9F9ACA428ADE1F4006AC693 /* LightsOut */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -343,7 +342,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D9F9ACA528ADE1F5006AC693 /* LightsOut in Resources */,
 				D98BF9F128AB2664001D5335 /* ComicSansMS.ttf in Resources */,
 				D9EF30AD2683BF95009761A9 /* LaunchScreen.storyboard in Resources */,
 				D9EF30AA2683BF95009761A9 /* Assets.xcassets in Resources */,

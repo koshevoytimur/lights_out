@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Combine
 
 extension UIView {
   static func wrapView(_ view: UIView, borderWidth: CGFloat = 8) -> UIView {
@@ -206,11 +207,12 @@ extension UIView {
   }
 }
 
-extension UITextField {
-  func textPublisher() -> AnyPublisher<String, Never> {
-      NotificationCenter.default
-          .publisher(for: UITextField.textDidChangeNotification, object: self)
-          .map { ($0.object as? UITextField)?.text  ?? "" }
-          .eraseToAnyPublisher()
+public extension UITextField {
+  /// A publisher which emits whenever return button tapped.
+  var returnPublisher: AnyPublisher<String, Never> {
+    NotificationCenter.default
+      .publisher(for: UITextField.textDidEndEditingNotification, object: self)
+      .map { ($0.object as? UITextField)?.text  ?? "" }
+      .eraseToAnyPublisher()
   }
 }
