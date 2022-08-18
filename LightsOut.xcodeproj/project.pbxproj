@@ -89,6 +89,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		D90BB43028AE5FC200CB70E5 /* Bonjorno */ = {
+			isa = PBXGroup;
+			children = (
+				0ABB573D269FA07000C957DE /* GCDAsyncSocket.h */,
+				0ABB573F269FA0A300C957DE /* GCDAsyncSocket.m */,
+				0ABB573B269F9EDC00C957DE /* BonjourServer.swift */,
+			);
+			path = Bonjorno;
+			sourceTree = "<group>";
+		};
 		D91566492739845500E88EC4 /* Response */ = {
 			isa = PBXGroup;
 			children = (
@@ -100,6 +110,7 @@
 		D91B39BA272AAD1D007ED8B0 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				D90BB43028AE5FC200CB70E5 /* Bonjorno */,
 				D97EECDC272B581C008DA06A /* StoreService.swift */,
 				D98BF9F228AC5C4F001D5335 /* DeviceService.swift */,
 				D95F697428AD6C9E00876987 /* Mock.swift */,
@@ -133,14 +144,6 @@
 			path = Mode;
 			sourceTree = "<group>";
 		};
-		D95F697328AD6AA700876987 /* Cells */ = {
-			isa = PBXGroup;
-			children = (
-				D9EBF3202895BB6500FAD747 /* MainTableViewCell.swift */,
-			);
-			path = Cells;
-			sourceTree = "<group>";
-		};
 		D97D50872770A21C003D677A /* Request */ = {
 			isa = PBXGroup;
 			children = (
@@ -166,8 +169,8 @@
 		D97EECE1272B6DC2008DA06A /* Subviews */ = {
 			isa = PBXGroup;
 			children = (
+				D9EBF3202895BB6500FAD747 /* MainTableViewCell.swift */,
 				D95F697028AD6A6B00876987 /* Mode */,
-				D95F697328AD6AA700876987 /* Cells */,
 			);
 			path = Subviews;
 			sourceTree = "<group>";
@@ -257,9 +260,6 @@
 				D9EF30A92683BF95009761A9 /* Assets.xcassets */,
 				D9EF30AB2683BF95009761A9 /* LaunchScreen.storyboard */,
 				D9EF30AE2683BF95009761A9 /* Info.plist */,
-				0ABB573B269F9EDC00C957DE /* BonjourServer.swift */,
-				0ABB573D269FA07000C957DE /* GCDAsyncSocket.h */,
-				0ABB573F269FA0A300C957DE /* GCDAsyncSocket.m */,
 				0ABB573E269FA0A200C957DE /* LightsOut-Bridging-Header.h */,
 			);
 			path = LightsOut;
