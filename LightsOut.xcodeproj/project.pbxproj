@@ -10,7 +10,6 @@
 		0ABB573C269F9EDC00C957DE /* BonjourServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ABB573B269F9EDC00C957DE /* BonjourServer.swift */; };
 		0ABB5740269FA0A300C957DE /* GCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ABB573F269FA0A300C957DE /* GCDAsyncSocket.m */; };
 		D915664B2739846000E88EC4 /* DeviceResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = D915664A2739846000E88EC4 /* DeviceResponse.swift */; };
-		D93D1090272AF72D00453B3D /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D93D108F272AF72D00453B3D /* HomeViewController.swift */; };
 		D95F697228AD6A9500876987 /* ModeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D95F697128AD6A9500876987 /* ModeViewController.swift */; };
 		D95F697528AD6C9E00876987 /* Mock.swift in Sources */ = {isa = PBXBuildFile; fileRef = D95F697428AD6C9E00876987 /* Mock.swift */; };
 		D97D508627709727003D677A /* Moya in Frameworks */ = {isa = PBXBuildFile; productRef = D97D508527709727003D677A /* Moya */; };
@@ -46,7 +45,6 @@
 		0ABB573E269FA0A200C957DE /* LightsOut-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "LightsOut-Bridging-Header.h"; sourceTree = "<group>"; };
 		0ABB573F269FA0A300C957DE /* GCDAsyncSocket.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GCDAsyncSocket.m; sourceTree = "<group>"; };
 		D915664A2739846000E88EC4 /* DeviceResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceResponse.swift; sourceTree = "<group>"; };
-		D93D108F272AF72D00453B3D /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		D95F697128AD6A9500876987 /* ModeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModeViewController.swift; sourceTree = "<group>"; };
 		D95F697428AD6C9E00876987 /* Mock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mock.swift; sourceTree = "<group>"; };
 		D97D50882770A22D003D677A /* ColorRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorRequest.swift; sourceTree = "<group>"; };
@@ -112,7 +110,6 @@
 		D91B39BB272AAD28007ED8B0 /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
-				D93D108E272AF72100453B3D /* Home */,
 				D93D108B272AEE7100453B3D /* Main */,
 			);
 			path = Scenes;
@@ -125,14 +122,6 @@
 				D97EECE1272B6DC2008DA06A /* Subviews */,
 			);
 			path = Main;
-			sourceTree = "<group>";
-		};
-		D93D108E272AF72100453B3D /* Home */ = {
-			isa = PBXGroup;
-			children = (
-				D93D108F272AF72D00453B3D /* HomeViewController.swift */,
-			);
-			path = Home;
 			sourceTree = "<group>";
 		};
 		D95F697028AD6A6B00876987 /* Mode */ = {
@@ -259,10 +248,10 @@
 			isa = PBXGroup;
 			children = (
 				D9EBF31F2895BA6C00FAD747 /* LightsOut.entitlements */,
-				D998F90D2730A01C000EA384 /* Common */,
 				D97EECDE272B6B48008DA06A /* Models */,
-				D91B39BB272AAD28007ED8B0 /* Scenes */,
 				D91B39BA272AAD1D007ED8B0 /* Services */,
+				D91B39BB272AAD28007ED8B0 /* Scenes */,
+				D998F90D2730A01C000EA384 /* Common */,
 				D9EF30A02683BF94009761A9 /* AppDelegate.swift */,
 				D9EF30A22683BF94009761A9 /* SceneDelegate.swift */,
 				D9EF30A92683BF95009761A9 /* Assets.xcassets */,
@@ -361,7 +350,6 @@
 				D9F9ACA028AD7641006AC693 /* ModeCollectionViewCell.swift in Sources */,
 				D9EF30A52683BF94009761A9 /* MainViewController.swift in Sources */,
 				D9EF30A12683BF94009761A9 /* AppDelegate.swift in Sources */,
-				D93D1090272AF72D00453B3D /* HomeViewController.swift in Sources */,
 				D9EF30A32683BF94009761A9 /* SceneDelegate.swift in Sources */,
 				D9D42EE32772179700CC6336 /* SemiModalViewController.swift in Sources */,
 				0ABB573C269F9EDC00C957DE /* BonjourServer.swift in Sources */,

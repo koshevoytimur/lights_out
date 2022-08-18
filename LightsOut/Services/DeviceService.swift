@@ -181,8 +181,10 @@ extension DeviceService {
 
   private func turnOnLastMode(device: Device) {
     guard let modeStr = store.fetchStr(key: device.lastModeKey),
-          let mode = DeviceMode(rawValue: modeStr)
-    else { return }
+          let mode = DeviceMode(rawValue: modeStr) else {
+      rainbow(device: device)
+      return
+    }
 
     switch mode {
     case .color:
